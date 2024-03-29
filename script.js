@@ -126,7 +126,7 @@ for (let element of hoverable2) {
     handleMouseHover(element, 1);
 }
 
-function kvapilFunc() {
+function payloadFunc() {
     let bgdiv = document.getElementById("backgrounddiv");
     let hoverable = document.getElementsByClassName("-hoverable");
     let texts = document.getElementsByTagName("p");
@@ -136,7 +136,7 @@ function kvapilFunc() {
         i.style.transition = "none"
         i.style.color = "red";
         let words = i.innerText.split(" ").length
-        i.innerText = "kvapil ".repeat(words);
+        i.innerText = "why. ".repeat(words);
         i.style.fontSize = "50px";
     }
     title.style.color = "red";
@@ -147,15 +147,14 @@ function kvapilFunc() {
 }
 
 let letterArray = [];
+let secretKey = "why would you type this"
 document.body.addEventListener("keydown", ev => {
     letterArray.push(ev.key.toLowerCase());
-    console.log(".");
-    if (letterArray.length >= 6) {
-        let lastSix = letterArray.slice(-6);
+    if (letterArray.length >= secretKey.length) {
+        let lastSix = letterArray.slice(-secretKey.length);
         let result = lastSix.join("");
-        if (result == "kvapil") {
-            console.log(letterArray);
-            kvapilFunc();
+        if (result == secretKey) {
+            payloadFunc();
             letterArray = [];
         }
     }
