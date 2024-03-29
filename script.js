@@ -119,9 +119,42 @@ function handleMouseHover(element, mode) {
 }
 
 for (let element of hoverableElements) {
-    handleMouseHover(element)
+    handleMouseHover(element);
 }
 
 for (let element of hoverable2) {
-    handleMouseHover(element, 1)
+    handleMouseHover(element, 1);
 }
+
+function kvapilFunc() {
+    let bgdiv = document.getElementById("backgrounddiv");
+    let hoverable = document.getElementsByClassName("-hoverable");
+    let texts = document.getElementsByTagName("p");
+
+    let allThings = [...hoverable, ...texts]
+    for (let i of allThings) {
+        i.style.transition = "none"
+        i.style.color = "red";
+        let words = i.innerText.split(" ").length
+        i.innerText = "kvapil ".repeat(words);
+        i.style.fontSize = "50px";
+    }
+    title.style.color = "red";
+    bgdiv.style.backgroundColor = "rgba(120, 0, 0, 0.8)";
+    setTimeout(() => {
+        location.reload()
+    }, 800)
+}
+
+let letterArray = [];
+document.body.addEventListener("keydown", ev => {
+    letterArray.push(ev.key.toLowerCase());
+    if (letterArray.length >= 6) {
+        let lastSix = letterArray.slice(-6);
+        let result = lastSix.join("");
+        if (result == "kvapil") {
+            kvapilFunc();
+            letterArray = [];
+        }
+    }
+})
