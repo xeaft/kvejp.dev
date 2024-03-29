@@ -1,0 +1,9 @@
+#testnav {
+    color: #00CFCC;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#testnav:hover {
+    color: #00ACAA;
+}

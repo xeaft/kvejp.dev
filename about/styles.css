@@ -1,0 +1,9 @@
+#aboutnav {
+    color: #00CFCC;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#aboutnav:hover {
+    color: #00ACAA;
+}
