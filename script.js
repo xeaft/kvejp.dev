@@ -149,10 +149,12 @@ function kvapilFunc() {
 let letterArray = [];
 document.body.addEventListener("keydown", ev => {
     letterArray.push(ev.key.toLowerCase());
+    console.log(".");
     if (letterArray.length >= 6) {
         let lastSix = letterArray.slice(-6);
         let result = lastSix.join("");
         if (result == "kvapil") {
+            console.log(letterArray);
             kvapilFunc();
             letterArray = [];
         }
