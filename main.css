@@ -8,6 +8,12 @@ body {
     font-family: monospace;
     margin: 0;
     background-color: #131313;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 footer {
@@ -20,6 +26,16 @@ h1 {
     margin: 0;
     backdrop-filter: blur(10px);
     padding-left: calc(var(--width-scale) * 1.5);
+    transition: 0.4s;
+}
+
+h1:hover {
+    transition: 0.4s;
+    text-shadow: 2px 2px 5px #11cecb40,
+        -2px 2px 5px #11cecb40,
+        2px -2px 5px #11cecb40,
+        -2px -2px 5px #11cecb40;
+
 }
 
 #backgrounddiv {
@@ -48,7 +64,7 @@ h1 {
     display: flex;
     justify-content: right;
     height: 100%;
-    width: 100%;
+    width: 60%;
 }
 
 .navanchor {
@@ -57,11 +73,16 @@ h1 {
     font-size: calc(100% + 5px);
     padding-top: calc(var(--height-scale) * 2);
     padding-left: calc(var(--width-scale) * 1.5);
+    transition: 0.4s;
 }
 
 .navanchor:hover {
     color: #00ACAA;
-    font-weight: bold;
+    transition: 0.4s;
+    text-shadow: 2px 2px 5px #11cecb40,
+        -2px 2px 5px #11cecb40,
+        2px -2px 5px #11cecb40,
+        -2px -2px 5px #11cecb40;
 }
 
 main {
@@ -72,6 +93,12 @@ main {
 p {
     padding-top: var(--height-scale);
     padding-left: calc(var(--width-scale) * 0.5);
+    display: none;
+}
+
+
+#maintext {
+    display: none;
 }
 
 #dottext {
@@ -80,15 +107,49 @@ p {
     font-weight: bolder;
 }
 
+#titletext {
+    text-decoration: none;
+    color: #CCCCCC;
+}
+
+#mousetrailer {
+    position: absolute;
+    box-shadow: 0 0 50px 10px #fff;
+    border-radius: 100%;
+    left: -50px;
+    top: -50px;
+    transition: box-shadow 0.4s;
+}
+
 @media screen and (min-width: 768px) {
     .navanchor {
         padding-left: calc(var(--width-scale) * 3);
+    }
+
+    #tabs {
+        width: 60%;
+    }
+
+    #footerdiv {
+        font-size: medium;
+    }
+
+    #mousetrailer {
+        display: block;
     }
 }
 
 @media screen and (max-width: 767px) {
     #footerdiv {
         font-size: 12px;
+    }
+
+    #tabs {
+        width: 100%;
+    }
+
+    #mousetrailer {
+        display: none;
     }
 
     .navanchor {
