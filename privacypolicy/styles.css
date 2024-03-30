@@ -1,0 +1,11 @@
+main > p {
+    display: block;
+}
+
+main > p > a {
+    color: rgb(46, 186, 233);
+}
+
+main > p > a:hover {
+    color: rgb(26, 100, 124);
+}

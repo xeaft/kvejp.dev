@@ -20,17 +20,17 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    align-items: flex-start;
+    justify-content: left;
 }
 
-h1 {
+#headerdiv > h1 {
     margin: 0;
     backdrop-filter: blur(10px);
     padding-left: calc(var(--width-scale) * 1.5);
     transition: 0.4s;
 }
 
-h1:hover {
+#headerdiv > h1:hover {
     transition: 0.4s;
     text-shadow: 2px 2px 5px #11cecb40,
         -2px 2px 5px #11cecb40,
@@ -55,7 +55,7 @@ h1:hover {
     height: 6svh;
 }
 
-#footerdiv {
+footer {
     padding-bottom: var(--height-scale);
     padding-right: var(--width-scale);
     text-align: right;
@@ -113,7 +113,7 @@ main > p {
 
 .-hover-scalable:hover {
     transition: 0.2s;
-    font-size: 105%;
+    transform: scale(1.05);
     text-shadow: 1px 1px 10px #ffffff44,
         -1px 1px 10px #ffffff44,
         1px -1px 10px #ffffff44,
@@ -219,6 +219,19 @@ input:checked + .slider:before {
     text-align: center;
 }
 
+#policyText {
+    position: absolute;
+    right: calc(var(--width-scale) * 2);
+    bottom: 0;
+}
+
+#policyText > a {
+    color: rgb(46, 186, 233);
+}
+
+#policyText > a:hover {
+    color: rgb(26, 100, 124);
+}
 @media screen and (min-width: 768px) {
     .navanchor {
         padding-left: calc(var(--width-scale) * 3);
@@ -228,7 +241,7 @@ input:checked + .slider:before {
         width: 60%;
     }
 
-    #footerdiv {
+    footer {
         font-size: medium;
     }
 
@@ -240,15 +253,14 @@ input:checked + .slider:before {
         display: flex;
     }
 
-    footer > p {
+    #configText {
         display: block;
     }
-
 }
 
 @media screen and (max-width: 767px) {
-    #footerdiv {
-        font-size: 12px;
+    footer {
+        font-size: 10px;
     }
 
     #tabs {
@@ -268,8 +280,7 @@ input:checked + .slider:before {
     .config {
         display: none;
     }
-
-    footer > p {
+    #configText {
         display: none;
     }
 }

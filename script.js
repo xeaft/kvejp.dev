@@ -49,7 +49,15 @@ addEventListener("resize", (event) => {
 
 window.dispatchEvent(new Event("resize"));
 
-let mainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
+let allMainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
+let mainTextObjs = []
+for (let i of allMainTextObjs){
+    let objClassList = Array.from(i.classList);
+    if (!objClassList.includes("important")) {
+        mainTextObjs.push(i);
+    }
+}
+console.log(mainTextObjs)
 let mainText = "";
 let currentObjectIndex = 0;
 let currentTextIndex = 0;
@@ -90,8 +98,10 @@ function textRenderIntervalFunc() {
     }
 }
 
-let textRenderInterval = setInterval(textRenderIntervalFunc, 120)
-
+let textRenderInterval;
+if (mainTextObjs.length > 0) {
+    textRenderInterval = setInterval(textRenderIntervalFunc, 120);
+}
 
 let mouseTrail = document.getElementById("mousetrailer");
 let hoverableElements = document.getElementsByClassName("-hoverable");
@@ -161,17 +171,19 @@ document.body.addEventListener("keydown", ev => {
 })
 
 let textScalingToggle = document.getElementById("text-scale-checkbox");
-textScalingToggle.addEventListener("change", ev => {
-    let checked = ev.currentTarget.checked;
-    let scalable = document.querySelectorAll("main > p");
-    for (let i of scalable) {
-        let classList = Array.from(i.classList);
-        let hasClass = classList.includes("-hover-scalable")
-        if (checked && !hasClass) {
-            i.classList.add("-hover-scalable");
-        } else if (!checked && hasClass) {
-            i.classList.remove("-hover-scalable");
+if (textScalingToggle) {
+    textScalingToggle.addEventListener("change", ev => {
+        let checked = ev.currentTarget.checked;
+        let scalable = document.querySelectorAll("main > p");
+        for (let i of scalable) {
+            let classList = Array.from(i.classList);
+            let hasClass = classList.includes("-hover-scalable")
+            if (checked && !hasClass) {
+                i.classList.add("-hover-scalable");
+            } else if (!checked && hasClass) {
+                i.classList.remove("-hover-scalable");
+            }
         }
-    }
-    
-})
+        
+    })
+}

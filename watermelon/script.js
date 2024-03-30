@@ -9,6 +9,22 @@ function changeWatermelonState(){
     setTimeout(() => {
         text.innerText = clicks;
     }, 75)
+
+    let bgdiv = document.getElementById("backgrounddiv");
+    let hoverable = document.getElementsByClassName("-hoverable");
+    let texts = document.getElementsByTagName("p");
+
+    let allThings = [...hoverable, ...texts]
+    for (let i of allThings) {
+        let oldTransition = i.style.transition;
+        i.style.transition = "none"
+        i.style.color = "red";
+        setTimeout(() => {
+            i.style.transition = oldTransition;
+        }, 20);
+    }
+    title.style.color = "red";
+    bgdiv.style.backgroundColor = "rgba(40, 0, 0, 0.8)";
 }
 
 let animationInProgress = false;

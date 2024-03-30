@@ -1,5 +1,12 @@
 .maintext {
     text-align: center;
     font-size: 3vh;
-    padding-top: 12vh;
+    margin-top: 12vh;
+    width: fit-content;
 }
+
+main > div {
+    display: flex;
+    justify-content: center;
+}
+

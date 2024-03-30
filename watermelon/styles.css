@@ -4,3 +4,16 @@ img {
     margin-top: 30vh;
     transition: 0.1s;
 }
+
+main {
+    align-items: center;
+}
+
+main > div {
+    display: flex;
+}
+
+p {
+    display: block;
+    margin: auto;
+}
