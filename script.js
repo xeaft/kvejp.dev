@@ -49,7 +49,7 @@ addEventListener("resize", (event) => {
 
 window.dispatchEvent(new Event("resize"));
 
-let mainTextObjs = document.getElementsByTagName("p");
+let mainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
 let mainText = "";
 let currentObjectIndex = 0;
 let currentTextIndex = 0;
@@ -158,4 +158,20 @@ document.body.addEventListener("keydown", ev => {
             letterArray = [];
         }
     }
+})
+
+let textScalingToggle = document.getElementById("text-scale-checkbox");
+textScalingToggle.addEventListener("change", ev => {
+    let checked = ev.currentTarget.checked;
+    let scalable = document.querySelectorAll("main > p");
+    for (let i of scalable) {
+        let classList = Array.from(i.classList);
+        let hasClass = classList.includes("-hover-scalable")
+        if (checked && !hasClass) {
+            i.classList.add("-hover-scalable");
+        } else if (!checked && hasClass) {
+            i.classList.remove("-hover-scalable");
+        }
+    }
+    
 })

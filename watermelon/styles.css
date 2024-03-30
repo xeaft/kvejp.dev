@@ -2,4 +2,5 @@ img {
     display: block;
     margin: auto;
     margin-top: 30vh;
+    transition: 0.1s;
 }

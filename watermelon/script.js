@@ -11,7 +11,11 @@ function changeWatermelonState(){
     }, 75)
 }
 
+let animationInProgress = false;
 function clickWatermelon() {
+    if (animationInProgress) {
+        return
+    }
     let num = Math.round(Math.random() * 100) % 15;
     if (num == 2) {
         watermelonGone = true;
@@ -20,6 +24,14 @@ function clickWatermelon() {
     } 
     clicks += 1;
     text.innerText = clicks;
+    animationInProgress = true;
+    watermelon.style.scale = "120%";
+    setTimeout(() => {
+        watermelon.style.scale = "100%";
+        setTimeout(() => {
+            animationInProgress = false;
+        }, 50)
+    }, 100)
 }
 
 watermelon.addEventListener("click", ev => {
