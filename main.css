@@ -35,7 +35,8 @@ h1:hover {
         -2px 2px 5px #11cecb40,
         2px -2px 5px #11cecb40,
         -2px -2px 5px #11cecb40;
-
+    transition: 0.4s;
+    font-size: 2.2em;
 }
 
 #backgrounddiv {
@@ -43,6 +44,7 @@ h1:hover {
     width: 100%;
     height: 100%;
     background: radial-gradient(90% 50% at 50% 0%, rgba(14, 67, 119, 0.25) 0%, rgba(14, 67, 119, 0) 100%);
+    z-index: -1;
 }
 
 #headerdiv {
@@ -83,8 +85,9 @@ h1:hover {
         -2px 2px 5px #11cecb40,
         2px -2px 5px #11cecb40,
         -2px -2px 5px #11cecb40;
-}
+    font-size: x-large;
 
+}
 main {
     font-size: larger;
     padding-left: calc(var(--width-scale) * 1.5);
