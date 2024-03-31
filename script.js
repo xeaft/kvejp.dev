@@ -180,20 +180,29 @@ document.body.addEventListener("keydown", ev => {
     }
 })
 
+function setHoverEffect(objs, toggle) {
+    for (let i of objs) {
+        let classList = Array.from(i.classList);
+        let hasClass = classList.includes("-hover-scalable")
+        if (toggle && !hasClass) {
+            i.classList.add("-hover-scalable");
+        } else if (!toggle && hasClass) {
+            i.classList.remove("-hover-scalable");
+        }
+        localStorage.setItem("text-scale", toggle)
+    }
+}
+
 let textScalingToggle = document.getElementById("text-scale-checkbox");
 if (textScalingToggle) {
     textScalingToggle.addEventListener("change", ev => {
         let checked = ev.currentTarget.checked;
         let scalable = document.querySelectorAll("main > p");
-        for (let i of scalable) {
-            let classList = Array.from(i.classList);
-            let hasClass = classList.includes("-hover-scalable")
-            if (checked && !hasClass) {
-                i.classList.add("-hover-scalable");
-            } else if (!checked && hasClass) {
-                i.classList.remove("-hover-scalable");
-            }
-        }
-        
+        setHoverEffect(scalable, checked);
     })
+    textScalingToggle.checked = localStorage.getItem("text-scale") === "true" ? true : false
+    let checked = textScalingToggle.checked;
+    let scalable = document.querySelectorAll("main > p");
+    setHoverEffect(scalable, checked);
 }
+
