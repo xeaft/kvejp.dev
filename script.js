@@ -57,7 +57,7 @@ for (let i of allMainTextObjs){
         mainTextObjs.push(i);
     }
 }
-console.log(mainTextObjs)
+
 let mainText = "";
 let currentObjectIndex = 0;
 let currentTextIndex = 0;
@@ -137,9 +137,19 @@ for (let element of hoverable2) {
 }
 
 function payloadFunc() {
+    let loc = window.location.href;
+    if (loc.search("privacypolicy") > -1) {
+        return
+    }
+
     let bgdiv = document.getElementById("backgrounddiv");
     let hoverable = document.getElementsByClassName("-hoverable");
     let texts = document.getElementsByTagName("p");
+
+    let configelems = document.getElementsByClassName("config");
+    if (configelems.length) {
+        configelems[0].style.display = "none";
+    }
 
     let allThings = [...hoverable, ...texts]
     for (let i of allThings) {
