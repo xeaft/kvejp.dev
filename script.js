@@ -206,3 +206,17 @@ if (textScalingToggle) {
     setHoverEffect(scalable, checked);
 }
 
+let disableLightningToggle = document.getElementById("disable-lightning-checkbox");
+if (disableLightningToggle) {
+    disableLightningToggle.addEventListener("change", ev => {
+        let checked = ev.currentTarget.checked;
+        let thing = document.getElementById("mousetrailer");
+        console.log(thing)
+        thing.style.display = checked ? "none" : "block"
+        localStorage.setItem("disable-cursor-lightning", checked)
+
+    })
+    disableLightningToggle.checked = localStorage.getItem("disable-cursor-lightning") === "true" ? true : false
+    let checked = disableLightningToggle.checked;
+    document.getElementById("mousetrailer").style.display = checked ? "none" : "block"
+}
