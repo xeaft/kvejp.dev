@@ -30,6 +30,10 @@ addEventListener("resize", (event) => {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
+    console.log(tabs.style.paddingTop,
+        tabs.style.justifyContent,
+        tabs.style.right,
+        tabs.style.paddingRight)
     if (width < 768) {
         let headerHeight = header.offsetHeight;
         tabs.style.paddingTop = headerHeight + "px";
@@ -51,7 +55,7 @@ window.dispatchEvent(new Event("resize"));
 
 let allMainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
 let mainTextObjs = []
-for (let i of allMainTextObjs){
+for (let i of allMainTextObjs) {
     let objClassList = Array.from(i.classList);
     if (!objClassList.includes("important")) {
         mainTextObjs.push(i);
@@ -179,44 +183,3 @@ document.body.addEventListener("keydown", ev => {
         }
     }
 })
-
-function setHoverEffect(objs, toggle) {
-    for (let i of objs) {
-        let classList = Array.from(i.classList);
-        let hasClass = classList.includes("-hover-scalable")
-        if (toggle && !hasClass) {
-            i.classList.add("-hover-scalable");
-        } else if (!toggle && hasClass) {
-            i.classList.remove("-hover-scalable");
-        }
-        localStorage.setItem("text-scale", toggle)
-    }
-}
-
-let textScalingToggle = document.getElementById("text-scale-checkbox");
-if (textScalingToggle) {
-    textScalingToggle.addEventListener("change", ev => {
-        let checked = ev.currentTarget.checked;
-        let scalable = document.querySelectorAll("main > p");
-        setHoverEffect(scalable, checked);
-    })
-    textScalingToggle.checked = localStorage.getItem("text-scale") === "true" ? true : false
-    let checked = textScalingToggle.checked;
-    let scalable = document.querySelectorAll("main > p");
-    setHoverEffect(scalable, checked);
-}
-
-let disableLightningToggle = document.getElementById("disable-lightning-checkbox");
-if (disableLightningToggle) {
-    disableLightningToggle.addEventListener("change", ev => {
-        let checked = ev.currentTarget.checked;
-        let thing = document.getElementById("mousetrailer");
-        console.log(thing)
-        thing.style.display = checked ? "none" : "block"
-        localStorage.setItem("disable-cursor-lightning", checked)
-
-    })
-    disableLightningToggle.checked = localStorage.getItem("disable-cursor-lightning") === "true" ? true : false
-    let checked = disableLightningToggle.checked;
-    document.getElementById("mousetrailer").style.display = checked ? "none" : "block"
-}

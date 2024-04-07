@@ -23,14 +23,14 @@ footer {
     justify-content: left;
 }
 
-#headerdiv > h1 {
+#headerdiv>h1 {
     margin: 0;
     backdrop-filter: blur(10px);
     padding-left: calc(var(--width-scale) * 1.5);
     transition: 0.4s;
 }
 
-#headerdiv > h1:hover {
+#headerdiv>h1:hover {
     transition: 0.4s;
     text-shadow: 2px 2px 5px #11cecb40,
         -2px 2px 5px #11cecb40,
@@ -60,7 +60,7 @@ footer {
     padding-right: var(--width-scale);
 }
 
-footer > p {
+footer>p {
     text-align: right;
 }
 
@@ -92,6 +92,7 @@ footer > p {
     font-size: x-large;
 
 }
+
 main {
     font-size: larger;
     padding-left: calc(var(--width-scale) * 1.5);
@@ -110,7 +111,7 @@ p {
     text-align: center;
 }
 
-main > p {
+main>p {
     display: none;
 }
 
@@ -174,7 +175,7 @@ main > p {
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
+
 .slider:before {
     position: absolute;
     content: "";
@@ -186,26 +187,26 @@ main > p {
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
-input:checked + .slider {
+
+input:checked+.slider {
     background-color: #5bf17c;
 }
-  
-input:checked + .slider:before {
+
+input:checked+.slider:before {
     -webkit-transform: translateX(17px);
     -ms-transform: translateX(17px);
     transform: translateX(17px);
 }
-  
+
 .slider.round {
     border-radius: 34px;
 }
-  
+
 .slider.round:before {
     border-radius: 50%;
 }
 
-.-setting > p {
+.-setting>p {
     margin-top: 0;
 }
 
@@ -229,20 +230,21 @@ input:checked + .slider:before {
     bottom: 0;
 }
 
-#policyText > a {
+#policyText>a {
     color: rgb(46, 186, 233);
 }
 
-#policyText > a:hover {
+#policyText>a:hover {
     color: rgb(26, 100, 124);
 }
+
 @media screen and (min-width: 768px) {
     .navanchor {
         padding-left: calc(var(--width-scale) * 3);
     }
 
     #tabs {
-        width: 60%;
+        width: 100%;
     }
 
     footer {
@@ -284,6 +286,7 @@ input:checked + .slider:before {
     .config {
         display: none;
     }
+
     #configText {
         display: none;
     }
