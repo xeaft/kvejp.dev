@@ -30,10 +30,6 @@ addEventListener("resize", (event) => {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    console.log(tabs.style.paddingTop,
-        tabs.style.justifyContent,
-        tabs.style.right,
-        tabs.style.paddingRight)
     if (width < 768) {
         let headerHeight = header.offsetHeight;
         tabs.style.paddingTop = headerHeight + "px";
@@ -44,7 +40,6 @@ addEventListener("resize", (event) => {
         tabs.style.paddingTop = "";
         tabs.style.justifyContent = "right";
         tabs.style.right = 0;
-        tabs.style.paddingRight = "2svh";
     }
 
     root.style.setProperty("--height-scale", `${varScale}${varUse}`);
@@ -183,3 +178,10 @@ document.body.addEventListener("keydown", ev => {
         }
     }
 })
+
+let userAgent = navigator.userAgent;
+let isMobile = userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|Windows Phone)/);
+
+if (isMobile) {
+    mouseTrail.style.display = "none";
+}

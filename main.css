@@ -23,14 +23,14 @@ footer {
     justify-content: left;
 }
 
-#headerdiv>h1 {
+#headerdiv > h1 {
     margin: 0;
     backdrop-filter: blur(10px);
     padding-left: calc(var(--width-scale) * 1.5);
     transition: 0.4s;
 }
 
-#headerdiv>h1:hover {
+#headerdiv > h1:hover {
     transition: 0.4s;
     text-shadow: 2px 2px 5px #11cecb40,
         -2px 2px 5px #11cecb40,
@@ -55,12 +55,15 @@ footer {
     height: 6svh;
 }
 
-footer {
-    padding-bottom: var(--height-scale);
-    padding-right: var(--width-scale);
+header {
+    padding-right: calc(var(--width-scale) * 1.5);
 }
 
-footer>p {
+footer {
+    padding-bottom: var(--height-scale);
+}
+
+footer > p {
     text-align: right;
 }
 
@@ -279,7 +282,6 @@ input:checked+.slider:before {
 
     .navanchor {
         padding-left: calc(var(--width-scale) * 1.5);
-        padding-right: 0;
         padding-top: calc(var(--height-scale) * 2.4)
     }
 
