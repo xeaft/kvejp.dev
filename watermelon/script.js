@@ -33,7 +33,7 @@ function clickWatermelon() {
         return
     }
     let num = Math.round(Math.random() * 100) % 15;
-    if (num == 2) {
+    if (num == 2 && clicks > 15) {
         watermelonGone = true;
         changeWatermelonState();
         return;
