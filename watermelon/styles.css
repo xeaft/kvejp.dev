@@ -9,11 +9,50 @@ main {
     align-items: center;
 }
 
-main > div {
+main>div {
     display: flex;
 }
 
 p {
     display: block;
     margin: auto;
+}
+
+#upgrade-shop {
+    width: 15vw;
+    position: absolute;
+    right: 0;
+    top: 6svh;
+    height: calc(100svh - 6svh - 2px);
+    border-top: 2px solid #440000;
+    border-left: 2px solid #440000;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+#upgrade-shop::-webkit-scrollbar {
+    display: none;
+}
+
+.upgrade-button {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 10px;
+    margin-bottom: 2px;
+    display: flex;
+    flex-direction: row;
+}
+
+.upgrade-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.upgrade-owned {
+    text-align: right;
+    margin-right: 10%;
 }
