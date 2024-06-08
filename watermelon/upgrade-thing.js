@@ -79,7 +79,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
 
         let bgDiv = document.createElement("div");
         bgDiv.style.position = "absolute";
-        bgDiv.style.right = "23svh";
+        bgDiv.style.right = "16vw";
         bgDiv.style.top = mouseY + "px";
         bgDiv.style.width = textSize.x + 10 + "px";
         bgDiv.style.height = textSize.y + 10 + "px";
