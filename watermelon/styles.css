@@ -22,8 +22,8 @@ p {
     width: 15vw;
     position: absolute;
     right: 0;
-    top: 6svh;
-    height: calc(100svh - 6svh - 2px);
+    top: 16svh;
+    height: calc(100svh - 16svh - 2px);
     border-top: 2px solid #440000;
     border-left: 2px solid #440000;
     overflow-y: scroll;
@@ -32,6 +32,24 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+
+#onetime-upgrade-shop {
+    width: 15vw;
+    position: absolute;
+    right: 0;
+    top: 6svh;
+    height: calc(9svh - 2px);
+    border-top: 2px solid #440000;
+    border-left: 2px solid #440000;
+    border-bottom: 2px solid #440000;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }
 
 #upgrade-shop::-webkit-scrollbar {

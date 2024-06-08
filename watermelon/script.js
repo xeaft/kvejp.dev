@@ -3,8 +3,11 @@ let watermelon = document.getElementsByTagName("img")[0];
 let watermelonGone = false;
 let animationInProgress = false;
 let clickMultiplier = 1
+let melonMultiplier = 1
 let clickDelay = 50;
 let animationLength = 100;
+let explosionChance = 150;
+let basementOwned = false;
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -38,7 +41,7 @@ function clickWatermelon() {
 
     let clicks = getClicks();
 
-    let num = Math.round(Math.random() * 100) % 15;
+    let num = Math.round(Math.random() * explosionChance * 10) % explosionChance;
     if (num == 2 && clicks > 15) {
         watermelonGone = true;
         changeWatermelonState();
