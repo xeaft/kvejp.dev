@@ -61,6 +61,7 @@ header {
 
 footer {
     padding-bottom: var(--height-scale);
+    display: flex;
 }
 
 footer > p {

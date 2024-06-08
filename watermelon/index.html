@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="cz">
+<html lang="cs">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="personal developer website">
     <meta name="keywords" content="Kvejp">
-    <meta property="og:title" content="Kvejp" />
+    <meta property="og:title" content="Kvejp">
     <meta property="og:description"
-        content="Kvejp development website - Watermelon Clicker! click on the watermelon as many times as you can. what could possibly go wrong?" />
-    <meta property="og:image" content="/assets/melon_cursor.png" />
+        content="Kvejp development website - Watermelon Clicker! click on the watermelon as many times as you can. what could possibly go wrong?">
+    <meta property="og:image" content="/assets/melon_cursor.png">
     <meta property="og:url" content="https://kvejp.dev/">
     <meta property="og:type" content="website">
     <title>Kvejp - watermelon</title>
@@ -22,6 +22,7 @@
     <script src="script.js" defer></script>
     <script src="upgrade-thing.js" defer></script>
     <script src="upgrades.js" defer></script>
+    <script src="config.js" defer></script>
 </head>
 
 <body>
@@ -33,7 +34,8 @@
                 <a class="navanchor -hoverable" id="homenav" href="/">Home</a>
                 <a class="navanchor -hoverable" id="aboutnav" href="/about/">About</a>
                 <a class="navanchor -hoverable" id="testnav" href="/test/">Test</a>
-                <a class="navanchor -hoverable" id="idknav" href="/idk/">Idk</a>
+                <a class="navanchor -hoverable" id="idknav" href="/watermelon/">Watermelon</a>
+
             </nav>
         </div>
     </header>
@@ -42,11 +44,28 @@
         <div>
             <p class="-hoverable2 maintext" id="clicks-count">0</p>
         </div>
-        <div id="upgrade-shop"></div>
-        <div id="onetime-upgrade-shop"></div>
+
+        <div id="onetime-upgrade-shop" class="upgrade-shop">
+            <div class="upgrade-title"><p class="upgrade-title-text">Permanent Upgrades</p></div>
+            <div class="upgrade-shop-container" id="onetime-upgrade-shop-container"></div>
+        </div>
+
+        <div id="upgrade-shop" class="upgrade-shop">
+            <div class="upgrade-title"><p class="upgrade-title-text">Progressive Upgrades</p></div>
+            <div class="upgrade-shop-container" id="upgrade-shop-container"></div>
+        </div>
+        
+        <div id="clicker-upgrade-shop" class="upgrade-shop">
+            <div class="upgrade-title"><p class="upgrade-title-text">Other Upgrades</p></div>
+            <div class="upgrade-shop-container" id="clicker-upgrade-shop-container"></div>
+        </div>
+
         </div>
     </main>
     <footer>
+        <div class="progress-saveload-button" id="save-progress"><p>Download Progress</p></div>
+        <div class="progress-saveload-button" id="load-progress"><p>Load Progress</p></div>
+
         <p id="policyText"><a href="/privacypolicy/">privacy policy</a></p>
     </footer>
     <div id="mousetrailer"></div>

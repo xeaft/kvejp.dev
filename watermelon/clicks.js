@@ -16,6 +16,15 @@ function saveClicks() {
     localStorage.setItem("clicks", clicks);
 }
 
+function getUpgradeCount(upgrade) {
+    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    if (upgradeButton == null) {
+        return 0;
+    }
+    
+    return +upgradeButton.querySelector(".upgrade-owned").innerText;
+}
+
 function updateClicksText() {
     let costTexts = document.getElementsByClassName("upgrade-cost");
     for (let costText of costTexts) {

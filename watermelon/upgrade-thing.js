@@ -1,11 +1,13 @@
-function createUpgrade(name, description, cost, callback, delay) {
-    let upgradeShop = document.getElementById("upgrade-shop");
+function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId, execOnceFunc, execOnceType) {
+    let upgradeShop = document.getElementById(upgradeShopId);
     let button = document.createElement("div");
     let titleText = document.createElement("p");
     let costText = document.createElement("p");
     let titleCostContainer = document.createElement("div");
     let ownedText = document.createElement("p");
     let ownedAmt = 0;
+
+    upgradeMultipliers[name] = 0;
 
     let existingUpgradeJson = localStorage.getItem(name);
     if (existingUpgradeJson != null) {
@@ -31,6 +33,7 @@ function createUpgrade(name, description, cost, callback, delay) {
     ownedText.className = "upgrade-owned";
     button.style.backgroundColor = "#232323";
     costText.style.marginLeft = "5%";
+    button.id = `${name}-upgrade`;
 
     titleCostContainer.appendChild(titleText);
     titleCostContainer.appendChild(costText);
@@ -62,19 +65,22 @@ function createUpgrade(name, description, cost, callback, delay) {
                 if (execOnce) {
                     callback();
                 }
+
+                if (typeof execOnceFunc == "function" && execOnceType == "onclick") {
+                    execOnceFunc();
+                }
             }
         }
     });
 
     let textSize = getTextSize(description);
     button.addEventListener("mouseenter", (ev) => {
-        let mouseX = ev.clientX;
         let mouseY = ev.clientY;
 
         let bgDiv = document.createElement("div");
         bgDiv.style.position = "absolute";
-        bgDiv.style.right = "15svh"
-        bgDiv.style.top = button.style.top;
+        bgDiv.style.right = "23svh";
+        bgDiv.style.top = mouseY + "px";
         bgDiv.style.width = textSize.x + 10 + "px";
         bgDiv.style.height = textSize.y + 10 + "px";
         bgDiv.id = "upgrade-hover-text";
@@ -82,11 +88,20 @@ function createUpgrade(name, description, cost, callback, delay) {
         bgDiv.style.backgroundColor = "#000";
 
         let textObj = document.createElement("p");
+        textObj.style.lineHeight = textSize.y + 10 + "px";
         textObj.innerText = description;
-        textObj.style.margin = "0";
+        textObj.style.padding = "0";
+        textObj.style.margin = "5px";
         bgDiv.appendChild(textObj);
         document.body.appendChild(bgDiv);
     });
+
+    button.addEventListener("mousemove", (ev) => {
+        let thing = document.getElementById("upgrade-hover-text");
+        if (thing) {
+            thing.style.top = ev.clientY + "px";
+        }
+    })
 
     button.addEventListener("mouseleave", (ev) => {
         let thing = document.getElementById("upgrade-hover-text");
@@ -103,6 +118,14 @@ function createUpgrade(name, description, cost, callback, delay) {
             }
         }, delay);
     }
+
+    if (typeof execOnceFunc == "function" && execOnceType != "onclick") {
+        execOnceFunc();
+    }
+}
+
+function createUpgrade(name, description, cost, callback, delay, execOnceFunc, execOnceType) {
+    createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", execOnceFunc, execOnceType);
 }
 
 function createOneTimeUpgrade(name, desc, cost, callback) {
@@ -112,7 +135,7 @@ function createOneTimeUpgrade(name, desc, cost, callback) {
         return;
     }
 
-    let upgradeShop = document.getElementById("onetime-upgrade-shop");
+    let upgradeShop = document.getElementById("onetime-upgrade-shop-container");
     let button = document.createElement("div");
     let titleText = document.createElement("p");
     let costText = document.createElement("p");
@@ -154,6 +177,9 @@ function createOneTimeUpgrade(name, desc, cost, callback) {
     });
 }
 
+function createClickerUpgrade(name, description, cost, callback, delay) {
+    createAnyUpgrade(name, description, cost, callback, delay, "clicker-upgrade-shop-container");
+}
 
 function getNextCost(currentCost, ownedAmt) {
     // TODO: make a normal formula for this
@@ -176,4 +202,15 @@ function getTextSize(text) {
 
     document.body.removeChild(p);
     return size;
+}
+
+function closenessLevel(x, y) {
+    let difference = Math.abs(x - y);
+    let maxDifference = Math.max(x, y);
+    let closenessScore = 10 - (difference / maxDifference * 10);
+    
+    if (closenessScore < 1) closenessScore = 1;
+    if (closenessScore > 10) closenessScore = 10;
+    
+    return closenessScore;
 }

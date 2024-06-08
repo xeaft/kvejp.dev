@@ -8,6 +8,8 @@ let clickDelay = 50;
 let animationLength = 100;
 let explosionChance = 150;
 let basementOwned = false;
+let basementSize = 0;
+let upgradeMultipliers = {};
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
