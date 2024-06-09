@@ -10,7 +10,11 @@ let animationLength = 100;
 let explosionChance = 150;
 let basementOwned = false;
 let basementSize = 0;
+let farmersPerFarm = 6
 let upgradeMultipliers = {};
+let ratOwned = false;
+let ratClickChance = 5;
+let ratClickMultiplier = 1.1;
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -51,14 +55,29 @@ function clickWatermelon(x, y) {
         return;
     }
 
-    let clicksToGet = 1 * clickMultiplier * extraClickMultiplier;
+    let isCritical = false;
+
+    if (ratOwned) {
+        let randomNumber = Math.round(Math.random() * 100);
+        if (randomNumber < ratClickChance) {
+            isCritical = true;
+        }
+    }
+
+    let clicksToGet = 1 * clickMultiplier * extraClickMultiplier * (isCritical ? ratClickMultiplier : 1);
     let randomOffset = Math.floor(Math.random() * 20) - 9;
     let clickText = document.createElement("p");
+    let clickTextText = "+" + (Math.round(clicksToGet * 100) / 100);
+    let clickTextWidth = getTextSize(clickTextText)
     clickText.className = "click-text";
-    clickText.innerText = "+" + clicksToGet;
+    clickText.innerText = clickTextText;
     clickText.style.position = "absolute";
-    clickText.style.left = x - 10 + randomOffset + "px";
+    clickText.style.left = x - 10 + randomOffset - Math.floor(clickTextWidth.width / 2) + "px";
     clickText.style.top = y - 30 + "px";
+
+    if (isCritical) {
+        clickText.style.color = "gold";
+    }
 
     document.body.appendChild(clickText);
     setTimeout(() => {

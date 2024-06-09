@@ -78,6 +78,11 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         if (isMobile) {
             return;
         }
+        
+        let thing = document.getElementById("upgrade-hover-text");
+        if (thing) {
+            thing.parentElement.removeChild(thing);
+        }
 
         let mouseY = ev.clientY;
 
@@ -133,7 +138,7 @@ function createUpgrade(name, description, cost, callback, delay, execOnceFunc, e
     createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", execOnceFunc, execOnceType);
 }
 
-function createOneTimeUpgrade(name, desc, cost, callback) {
+function createOneTimeUpgrade(name, description, cost, callback) {
     let owned = localStorage.getItem(name) != null ? true : false;
     if (owned) {
         callback();
@@ -152,6 +157,53 @@ function createOneTimeUpgrade(name, desc, cost, callback) {
         ownedAmt = existingUpgradeJson.owned;
         cost = existingUpgradeJson.cost;
     }
+
+    let textSize = getTextSize(description);
+    button.addEventListener("mouseenter", (ev) => {
+        if (isMobile) {
+            return;
+        }
+        
+        let thing = document.getElementById("upgrade-hover-text");
+        if (thing) {
+            thing.parentElement.removeChild(thing);
+        }
+
+        let mouseY = ev.clientY;
+
+        let bgDiv = document.createElement("div");
+        bgDiv.style.position = "absolute";
+        bgDiv.style.right = "16vw";
+        bgDiv.style.top = mouseY + "px";
+        bgDiv.style.width = textSize.x + 10 + "px";
+        bgDiv.style.height = textSize.y + 10 + "px";
+        bgDiv.id = "upgrade-hover-text";
+        bgDiv.style.border = "1px solid white";
+        bgDiv.style.backgroundColor = "#000";
+        bgDiv.style.pointerEvents = "none";
+
+        let textObj = document.createElement("p");
+        textObj.style.lineHeight = textSize.y + 10 + "px";
+        textObj.innerText = description;
+        textObj.style.padding = "0";
+        textObj.style.margin = "5px";
+        bgDiv.appendChild(textObj);
+        document.body.appendChild(bgDiv);
+    });
+
+    button.addEventListener("mousemove", (ev) => {
+        let thing = document.getElementById("upgrade-hover-text");
+        if (thing) {
+            thing.style.top = ev.clientY + "px";
+        }
+    })
+
+    button.addEventListener("mouseleave", (ev) => {
+        let thing = document.getElementById("upgrade-hover-text");
+        if (thing) {
+            thing.parentElement.removeChild(thing);
+        }
+    });
 
     titleText.innerText = name; 
     costText.innerText = Math.ceil(+cost);

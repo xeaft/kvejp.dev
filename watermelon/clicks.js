@@ -58,12 +58,19 @@ function buyUpgrade(upgrade, amt, force) {
             if (force) {
                 removeClicks(-getUpgradeCost(upgrade));          
             }
-            
+
             upgradeButton.click();
         }
     }
 }
  
+function removeUpgradeButton(upgradeName) {
+    let upgradeButton = document.getElementById(`${upgradeName}-upgrade`);
+    if (upgradeButton) {
+        upgradeButton.parentElement.removeChild(upgradeButton);
+    }
+}
+
 function updateClicksText() {
     let costTexts = document.getElementsByClassName("upgrade-cost");
     for (let costText of costTexts) {
