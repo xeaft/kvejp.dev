@@ -159,7 +159,7 @@ p {
     }
 
     img {
-    margin-top: 20svh;
+        margin-top: 20svh;
     }
 
     .upgrade-title {
@@ -190,5 +190,52 @@ p {
         color: rgb(45, 130, 216);
         background-color: #222;
         font-weight: bold;
+    }
+}
+
+.click-text {
+    position: absolute;
+    animation: textAnimation 4s forwards;
+    font-size: 22px;
+    pointer-events: none;
+}
+
+.drop-image {
+    position: absolute;
+    animation: dropAnimation 4s forwards;
+    pointer-events: none;
+    margin: 0;
+    width: 25px;
+    height: auto;
+    pointer-events: none;
+}
+
+.upgrade-container > p {
+    margin-left: 5px;
+}
+
+@keyframes textAnimation {
+    0% {
+        font-size: 22px;
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-300px);
+        opacity: 0;
+        font-size: 14px;
+    }
+}
+
+@keyframes dropAnimation {
+    0% {
+        width: 25px;
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        width: 10px;
+        transform: translateY(350px);
+        opacity: 0;
     }
 }

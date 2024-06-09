@@ -90,6 +90,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         bgDiv.id = "upgrade-hover-text";
         bgDiv.style.border = "1px solid white";
         bgDiv.style.backgroundColor = "#000";
+        bgDiv.style.pointerEvents = "none";
 
         let textObj = document.createElement("p");
         textObj.style.lineHeight = textSize.y + 10 + "px";

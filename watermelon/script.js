@@ -37,7 +37,7 @@ function changeWatermelonState() {
     bgdiv.style.backgroundColor = "rgba(40, 0, 0, 0.8)";
 }
 
-function clickWatermelon() {
+function clickWatermelon(x, y) {
     if (animationInProgress) {
         return;
     }
@@ -51,28 +51,60 @@ function clickWatermelon() {
         return;
     }
 
-    addClicks(1 * clickMultiplier * extraClickMultiplier);
+    let clicksToGet = 1 * clickMultiplier * extraClickMultiplier;
+    let randomOffset = Math.floor(Math.random() * 20) - 9;
+    let clickText = document.createElement("p");
+    clickText.className = "click-text";
+    clickText.innerText = "+" + clicksToGet;
+    clickText.style.position = "absolute";
+    clickText.style.left = x - 10 + randomOffset + "px";
+    clickText.style.top = y - 30 + "px";
+
+    document.body.appendChild(clickText);
+    setTimeout(() => {
+        clickText.parentElement.removeChild(clickText);
+    }, 4200);
+
+    setTimeout(() => {
+        let dropImage = document.createElement("img");
+        let xOffset = 600;
+        let posX = Math.round(Math.random() * xOffset);
+        dropImage.className = "drop-image";
+        dropImage.src = "/assets/melon.png";
+        dropImage.style.top = "-50px";
+        dropImage.style.left = Math.floor(window.innerWidth / 2) - xOffset / 2 + posX + "px";
+        document.body.appendChild(dropImage);
+
+        setTimeout(() => {
+            dropImage.parentElement.removeChild(dropImage);
+        }, 6000);
+    }, 350);
+
+    addClicks(clicksToGet);
     updateClicksText();
 
     animationInProgress = true;
     watermelon.style.scale = "120%";
+
     setTimeout(() => {
         watermelon.style.scale = "100%";
-        setTimeout(() => {
-            animationInProgress = false;
-        }, clickDelay)
-    }, animationLength)
+    }, animationLength);
+
+    setTimeout(() => {
+        animationInProgress = false;
+    }, clickDelay);
 }
 
 watermelon.addEventListener("click", ev => {
     if (ev.button == 0 && !watermelonGone) {
-        clickWatermelon()
+        clickWatermelon(ev.clientX, ev.clientY)
     }
 })
 
-watermelon.addEventListener("touchend", () => {
+watermelon.addEventListener("touchend", (ev) => {
     if (!watermelonGone) {
-        clickWatermelon();
+        let touch = ev.changedTouches[0];
+        clickWatermelon(touch.clientX, touch.clientY);
     }
 })
 
@@ -86,7 +118,7 @@ for (let btt of mobileUpgradeButtons) {
         
         let buttonType = "onetime";
         let buttonText = btt.querySelector("p").innerText;
-        
+
         if (buttonText == "Progressive") {
             buttonType = "upgrade";
         } else if (buttonText == "Other") {

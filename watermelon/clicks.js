@@ -41,11 +41,24 @@ function buyUpgrade(upgrade, amt, force) {
     
     let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
     if (upgradeButton) {
+        if (force) {
+            console.log(
+                "%cu%cp%cg%cr%ca%cd%ce",
+                "color: red; background-color: #222; font-weight: bold;",
+                "color: green; background-color: #323232; font-weight: bold;",
+                "color: red; background-color: #222; font-weight: bold;",
+                "color: green; background-color: #323232; font-weight: bold;",
+                "color: red; background-color: #222; font-weight: bold;",
+                "color: green; background-color: #323232; font-weight: bold;",
+                "color: red; background-color: #222; font-weight: bold;"
+              );        
+        }
+
         for (let i = 0; i < amt; i++) {
             if (force) {
-                addClicks(getUpgradeCost(upgrade));
+                removeClicks(-getUpgradeCost(upgrade));          
             }
-        
+            
             upgradeButton.click();
         }
     }

@@ -42,13 +42,13 @@ createUpgrade("melon farm", "a farm with melons, works better with 6 farmers", 8
 }, 50);
 
 
-createUpgrade("experienced farmers", "almost robotic. can work without a farm, somehow", 8000, () => {
+createUpgrade("experienced farmer", "almost robotic. can work without a farm, somehow", 8000, () => {
     addClicks(30);
 }, 50);
 
 createClickerUpgrade("mouse", "allows you to click faster", 500, () => {
     clickDelay -= +(clickDelay / 10);
-    animationLength -= +(animationLength / 10);
+    // animationLength -= +(animationLength / 10);
     explosionChance += +(explosionChance / 10);
 }, "no");
 
@@ -57,5 +57,5 @@ createClickerUpgrade("basement size", "increases the size of your basement", 500
 }, "no");
 
 createClickerUpgrade("borb", "gives more melons per click", 1000, () => {
-    clickMultiplier += 2
+    clickMultiplier += 2.5;
 }, "no");

@@ -81,9 +81,10 @@ footer > p {
     color: white;
     text-decoration: none;
     font-size: calc(100% + 5px);
-    padding-top: calc(var(--height-scale) * 2);
+    margin-top: calc(var(--height-scale) * 2);
     padding-left: calc(var(--width-scale) * 1.5);
     transition: 0.4s;
+    height: fit-content;
 }
 
 .navanchor:hover {
@@ -254,7 +255,7 @@ input:checked+.slider:before {
     #mousetrailer {
         display: block;
     }
-
+    
     .config {
         display: flex;
     }
@@ -274,15 +275,15 @@ input:checked+.slider:before {
     }
 
     .navanchor {
+        padding: 0;
         padding-left: calc(var(--width-scale) * 1.5);
-        padding-top: calc(var(--height-scale) * 2.4);
     }
 
     #tabs {
         padding: 0;
         margin: 0;
         left: 2px;
-        top: 24px;
+        top: 45px;
         justify-content: left;
     }
 
