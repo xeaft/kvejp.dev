@@ -69,12 +69,12 @@ footer > p {
 }
 
 #tabs {
-    position: fixed;
+    position: absolute;
     right: calc(var(--width-scale) * 2);
     display: flex;
     justify-content: right;
     height: 100%;
-    width: 60%;
+    width: 100%;
 }
 
 .navanchor {
@@ -247,10 +247,6 @@ input:checked+.slider:before {
         padding-left: calc(var(--width-scale) * 3);
     }
 
-    #tabs {
-        width: 100%;
-    }
-
     footer {
         font-size: medium;
     }
@@ -273,17 +269,13 @@ input:checked+.slider:before {
         font-size: 10px;
     }
 
-    #tabs {
-        width: 100%;
-    }
-
     #mousetrailer {
         display: none;
     }
 
     .navanchor {
         padding-left: calc(var(--width-scale) * 1.5);
-        padding-top: calc(var(--height-scale) * 2.4)
+        padding-top: calc(var(--height-scale) * 2.4);
     }
 
     .config {

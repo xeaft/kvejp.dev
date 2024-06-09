@@ -1,9 +1,9 @@
-#idknav {
+#melonnav {
     color: #00CFCC;
     text-decoration: underline;
     font-weight: bold;
 }
 
-#idknav:hover {
+#melonnav:hover {
     color: #00ACAA;
 }

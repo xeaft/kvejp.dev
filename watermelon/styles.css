@@ -125,6 +125,16 @@ p {
     display: none;
 }
 
+#melonnav {
+    color: #00CFCC;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#melonnav:hover {
+    color: #00ACAA;
+}
+
 @media screen and (max-width: 767px) {
     .upgrade-shop {
         width: 100%;

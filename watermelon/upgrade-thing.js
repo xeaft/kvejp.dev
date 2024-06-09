@@ -75,6 +75,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
 
     let textSize = getTextSize(description);
     button.addEventListener("mouseenter", (ev) => {
+        if (isMobile) {
+            return;
+        }
+
         let mouseY = ev.clientY;
 
         let bgDiv = document.createElement("div");
