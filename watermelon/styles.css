@@ -250,6 +250,7 @@ p {
     pointer-events: none;
     animation: fadeOut 4s forwards;
     font-size: xx-large;
+    text-align: center;
 }
 
 @keyframes fadeOut {

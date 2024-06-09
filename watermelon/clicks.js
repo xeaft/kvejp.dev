@@ -55,12 +55,19 @@ function buyUpgrade(upgrade, amt, force) {
         }
 
         for (let i = 0; i < amt; i++) {
+            let upgradePrice = getUpgradeCost(upgrade);
             if (force) {
-                removeClicks(-getUpgradeCost(upgrade));          
+                removeClicks(-upgradePrice);          
             }
-
-            upgradeButton.click();
+            
+            if (getClicks() >= upgradePrice) {
+                upgradeButton.click();
+            } else {
+                return false;
+            }
         }
+
+        return true;
     }
 }
  
@@ -68,6 +75,13 @@ function removeUpgradeButton(upgradeName) {
     let upgradeButton = document.getElementById(`${upgradeName}-upgrade`);
     if (upgradeButton) {
         upgradeButton.style.display = "none";
+    }
+}
+
+function showUpgradeButton(upgradeName) {
+    let upgradeButton = document.getElementById(`${upgradeName}-upgrade`);
+    if (upgradeButton) {
+        upgradeButton.style.display = "flex";
     }
 }
 
@@ -101,6 +115,25 @@ function createToastNotification(text) {
     setTimeout(() => {
         textObj.parentElement.removeChild(textObj);
     }, 4000);
+}
+
+function upgradeEverythingPossible(reverse) {
+    let upgrades = Array.from(document.getElementsByClassName("upgrade-button"));
+    if (reverse) {
+        upgrades.reverse();
+    }
+    for (let i of upgrades) {
+        if (i.style.display == "none") {
+            continue;
+        }
+
+        let upgradeName = i.querySelector(".upgrade-container").querySelector("p").innerText;
+        let canUpgrade = true;
+
+        while (canUpgrade) {
+            canUpgrade = buyUpgrade(upgradeName);
+        }
+    }
 }
 
 function rollXBuff() {

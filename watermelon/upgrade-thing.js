@@ -7,7 +7,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     let ownedText = document.createElement("p");
     let ownedAmt = 0;
 
-    upgradeMultipliers[name] = 0;
+    upgradeMultipliers[name] = 1;
     priceMultipliers[name] = 1;
     striking[name] = false;
 
@@ -135,7 +135,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
             if (striking[name]) {
                 return;
             }
-            
+
             let ownedAmt = +ownedText.innerHTML;
             for (let i = 0; i < ownedAmt; i++) {
                 callback();
@@ -146,10 +146,12 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     if (typeof execOnceFunc == "function" && execOnceType != "onclick") {
         execOnceFunc();
     }
+
+    return button;
 }
 
 function createUpgrade(name, description, cost, callback, delay, execOnceFunc, execOnceType) {
-    createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", execOnceFunc, execOnceType);
+    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", execOnceFunc, execOnceType);
 }
 
 function createOneTimeUpgrade(name, description, cost, callback) {
@@ -269,7 +271,7 @@ function createOneTimeUpgrade(name, description, cost, callback) {
 }
 
 function createClickerUpgrade(name, description, cost, callback, delay) {
-    createAnyUpgrade(name, description, cost, callback, delay, "clicker-upgrade-shop-container");
+    return createAnyUpgrade(name, description, cost, callback, delay, "clicker-upgrade-shop-container");
 }
 
 function getNextCost(currentCost, ownedAmt) {
@@ -295,6 +297,15 @@ function getTextSize(text) {
     return size;
 }
 
+function calculateEfficiency(workers, maxWorkers, workspaces) {
+    let totalMaxWorkers = maxWorkers * workspaces;
+
+    if (workers <= totalMaxWorkers) {
+        return 1; 
+    }
+
+    return efficiency = totalMaxWorkers / workers;  
+}
 function closenessLevel(x, y) {
     let difference = Math.abs(x - y);
     let maxDifference = Math.max(x, y);
