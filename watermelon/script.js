@@ -5,7 +5,7 @@ let animationInProgress = false;
 let clickMultiplier = 1;
 let extraClickMultiplier = 1;
 let melonMultiplier = 1;
-let clickDelay = 50;
+let clickDelay = 200;
 let animationLength = 100;
 let explosionChance = 150;
 let basementOwned = false;
@@ -67,7 +67,7 @@ function clickWatermelon(x, y) {
 
     setTimeout(() => {
         let dropImage = document.createElement("img");
-        let xOffset = 600;
+        let xOffset = Math.min(600, window.innerWidth);
         let posX = Math.round(Math.random() * xOffset);
         dropImage.className = "drop-image";
         dropImage.src = "/assets/melon.png";

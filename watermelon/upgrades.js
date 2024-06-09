@@ -48,7 +48,6 @@ createUpgrade("experienced farmer", "almost robotic. can work without a farm, so
 
 createClickerUpgrade("mouse", "allows you to click faster", 500, () => {
     clickDelay -= +(clickDelay / 10);
-    // animationLength -= +(animationLength / 10);
     explosionChance += +(explosionChance / 10);
 }, "no");
 
