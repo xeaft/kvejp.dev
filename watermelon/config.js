@@ -43,15 +43,7 @@ function downloadFile(content, filename) {
     let blob = new Blob([content], { type: 'text/plain' });
     let a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-
-    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-        a.setAttribute('target', '_blank');
-    } else {
-        a.setAttribute('download', filename);
-    }
-
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
