@@ -2,8 +2,9 @@ let text = document.getElementsByTagName("p")[0];
 let watermelon = document.getElementsByTagName("img")[0];
 let watermelonGone = false;
 let animationInProgress = false;
-let clickMultiplier = 1
-let melonMultiplier = 1
+let clickMultiplier = 1;
+let extraClickMultiplier = 1;
+let melonMultiplier = 1;
 let clickDelay = 50;
 let animationLength = 100;
 let explosionChance = 150;
@@ -50,7 +51,7 @@ function clickWatermelon() {
         return;
     }
 
-    addClicks(1 * clickMultiplier);
+    addClicks(1 * clickMultiplier * extraClickMultiplier);
     updateClicksText();
 
     animationInProgress = true;
@@ -75,3 +76,32 @@ watermelon.addEventListener("touchend", () => {
     }
 })
 
+let mobileUpgradeButtons = document.getElementsByClassName("mobile-upgrade-category-button");
+let upgradeShops = document.getElementsByClassName("upgrade-shop");
+for (let btt of mobileUpgradeButtons) {
+    btt.addEventListener("touchend", (ev) => {
+        for (let btt2 of mobileUpgradeButtons) {
+            btt2.classList.remove("active");
+        };
+        
+        let buttonType = "onetime";
+        let buttonText = btt.querySelector("p").innerText;
+        
+        if (buttonText == "Progressive") {
+            buttonType = "upgrade";
+        } else if (buttonText == "Other") {
+            buttonType =  "clicker";
+        }
+
+        for (let uShop of upgradeShops) {
+            let shopType = uShop.id;
+            if (shopType.startsWith(buttonType)) {
+                uShop.style.display = "flex";
+            } else {
+                uShop.style.display = "none";
+            }
+        }
+
+        btt.classList.add("active");
+    })
+}

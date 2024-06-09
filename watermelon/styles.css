@@ -120,3 +120,65 @@ p {
     cursor: pointer;
     background-color: #033e6e;
 }
+
+.mobile-upgrade-category-container {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .upgrade-shop {
+        width: 100%;
+        left: 0;
+    }
+
+    #upgrade-shop {
+        top: 65svh;
+        height: 30svh;
+    }
+
+    #onetime-upgrade-shop {
+        display: none;
+        top: 65svh;
+        height: 30svh;
+    }
+
+    #clicker-upgrade-shop {
+        display: none;
+        top: 65svh;
+        height: 30svh;
+    }
+
+    img {
+    margin-top: 20svh;
+    }
+
+    .upgrade-title {
+        display: none;
+    }
+
+    .mobile-upgrade-category-container {
+        display: flex;
+        position: absolute;
+        top: 60svh;
+        height: 5svh;
+        width: 100vw;
+        margin: 0;
+        left: 0;
+        justify-content: space-around;
+    }
+
+    .mobile-upgrade-category-button {
+        background-color: #131313;
+        width: 100%;
+    }
+
+    .mobile-upgrade-category-button:hover {
+        background-color: #181818;
+    }
+
+    .mobile-upgrade-category-button.active {
+        color: rgb(45, 130, 216);
+        background-color: #222;
+        font-weight: bold;
+    }
+}

@@ -25,6 +25,32 @@ function getUpgradeCount(upgrade) {
     return +upgradeButton.querySelector(".upgrade-owned").innerText;
 }
 
+function getUpgradeCost(upgrade) {
+    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    if (upgradeButton == null) {
+        return 0;
+    }
+    
+    return +upgradeButton.querySelector(".upgrade-cost").innerText;
+}
+
+function buyUpgrade(upgrade, amt, force) {
+    if (amt == null) {
+        amt = 1;
+    }
+    
+    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    if (upgradeButton) {
+        for (let i = 0; i < amt; i++) {
+            if (force) {
+                addClicks(getUpgradeCost(upgrade));
+            }
+        
+            upgradeButton.click();
+        }
+    }
+}
+ 
 function updateClicksText() {
     let costTexts = document.getElementsByClassName("upgrade-cost");
     for (let costText of costTexts) {

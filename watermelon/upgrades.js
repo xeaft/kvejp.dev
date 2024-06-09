@@ -3,14 +3,14 @@ createOneTimeUpgrade("melon basement", "a large space for workers and melons", 4
 });
 
 createOneTimeUpgrade("strong melons", "clicking produces more melons", 800, () => {
-    clickMultiplier += 0.5;
+    extraClickMultiplier += 0.5;
 });
 
 createOneTimeUpgrade("juicy melons", "they have larger melon value. thats a thing", 1600, () => {
     melonMultiplier += 0.2;
 });
 
-createOneTimeUpgrade("melon nutrition", "extra nutritious melons", 4000, () => {
+createOneTimeUpgrade("kvejp nutrition", "extra nutritious melons", 4000, () => {
     melonMultiplier += 0.4;
 });
 
