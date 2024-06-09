@@ -53,6 +53,11 @@ footer {
     align-items: center;
     backdrop-filter: blur(10px);
     height: 6svh;
+    pointer-events: none;
+}
+
+#headerdiv * {
+    pointer-events: all;
 }
 
 header {
@@ -75,6 +80,11 @@ footer > p {
     justify-content: right;
     height: 100%;
     width: 100%;
+    pointer-events: none;
+}
+
+#tabs * {
+    pointer-events: all;
 }
 
 .navanchor {
@@ -118,6 +128,8 @@ p {
 
 main > p {
     display: none;
+    margin-top: 0;
+    margin-bottom: 0.4svh;
 }
 
 .-hover-scalable:hover {
@@ -152,6 +164,7 @@ main > p {
     left: -50px;
     top: -50px;
     transition: box-shadow 0.4s;
+    pointer-events: none;
 }
 
 .switch {
@@ -255,7 +268,7 @@ input:checked+.slider:before {
     #mousetrailer {
         display: block;
     }
-    
+
     .config {
         display: flex;
     }
@@ -283,7 +296,7 @@ input:checked+.slider:before {
         padding: 0;
         margin: 0;
         left: 2px;
-        top: 45px;
+        top: 4svh;
         justify-content: left;
     }
 
@@ -293,5 +306,9 @@ input:checked+.slider:before {
 
     #configText {
         display: none;
+    }
+
+    main {
+        margin-top: 6svh;   
     }
 }
