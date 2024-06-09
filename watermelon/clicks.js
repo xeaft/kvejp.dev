@@ -67,14 +67,16 @@ function buyUpgrade(upgrade, amt, force) {
 function removeUpgradeButton(upgradeName) {
     let upgradeButton = document.getElementById(`${upgradeName}-upgrade`);
     if (upgradeButton) {
-        upgradeButton.parentElement.removeChild(upgradeButton);
+        upgradeButton.style.display = "none";
     }
 }
 
 function updateClicksText() {
     let costTexts = document.getElementsByClassName("upgrade-cost");
     for (let costText of costTexts) {
-        let cost = +costText.innerText;
+        let oldCost = costText.parentElement.parentElement.querySelector(".original-cost-text").innerText;
+        let cost = oldCost * globalPriceMultiplier;
+        costText.innerText = Math.ceil(cost);        
         if (cost <= clicks) {
             costText.style.color = "#00c400";
         } else {
@@ -85,5 +87,43 @@ function updateClicksText() {
     document.getElementById("clicks-count").innerText = Math.round(clicks);
 }
 
+function createToastNotification(text) {
+    let textObj = document.createElement("p");
+    let toasts = Array.from(document.getElementsByClassName("toast-notification"));
+
+    for (let [index, toast] of toasts.entries()) {
+        toast.style.top = (toasts.length - index) * 50 + "px";
+    }
+
+    textObj.className = "toast-notification";
+    textObj.innerText = text;
+    document.body.appendChild(textObj);
+    setTimeout(() => {
+        textObj.parentElement.removeChild(textObj);
+    }, 4000);
+}
+
+function rollXBuff() {
+    let number = Math.round(Math.random() * 99);
+    if (number > 30) {
+        return;
+    }
+
+    let choice = Math.round(Math.random() * 100);
+    if (choice < 40) {
+        let debuffNames = Object.keys(debuffs);
+        let debuffIndex = Math.round(Math.random() * (debuffNames.length - 1));
+        let debuffName = debuffNames[debuffIndex];
+        spawnDebuff(debuffName);
+        return;
+    }
+
+    let buffNames = Object.keys(buffs);
+    let buffIndex = Math.round(Math.random() * (buffNames.length - 1));
+    let buffName = buffNames[buffIndex];
+    spawnBuff(buffName);
+}
+
 setInterval(saveClicks, 0.167 * 1000 * 60);
 setInterval(updateClicksText, 60);
+setInterval(rollXBuff, 30000);

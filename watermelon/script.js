@@ -15,6 +15,9 @@ let upgradeMultipliers = {};
 let ratOwned = false;
 let ratClickChance = 5;
 let ratClickMultiplier = 1.1;
+let globalPriceMultiplier = 1;
+let priceMultipliers = {};
+let striking = {};
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";

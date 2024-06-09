@@ -8,6 +8,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     let ownedAmt = 0;
 
     upgradeMultipliers[name] = 0;
+    priceMultipliers[name] = 1;
+    striking[name] = false;
 
     let existingUpgradeJson = localStorage.getItem(name);
     if (existingUpgradeJson != null) {
@@ -35,24 +37,32 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     costText.style.marginLeft = "5%";
     button.id = `${name}-upgrade`;
 
+    let fullCostText = document.createElement("p");
+    fullCostText.className = "original-cost-text";
+    fullCostText.innerText = cost;
+    fullCostText.style.display = "none";
+
     titleCostContainer.appendChild(titleText);
     titleCostContainer.appendChild(costText);
     button.appendChild(titleCostContainer);
     button.appendChild(ownedText);
+    button.appendChild(fullCostText);
     upgradeShop.appendChild(button);
+    
 
     button.addEventListener("click", (ev) => {
         if (ev.button == 0) {
             let clicks = getClicks();
             let costNum = +cost;
 
-            if (clicks >= costNum) {
-                removeClicks(cost);
+            if (clicks >= costNum * globalPriceMultiplier) {
+                removeClicks(costNum * globalPriceMultiplier);
                 let ownedAmt = +ownedText.innerHTML;
                 cost = getNextCost(cost, ownedAmt);
                 ownedAmt += 1;
                 ownedText.innerHTML = ownedAmt;
                 costText.innerHTML = Math.ceil(cost);
+                fullCostText.innerText = Math.ceil(cost);
 
                 let jsonObj = {
                     owned: ownedAmt,
@@ -122,6 +132,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
 
     if (!execOnce) {
         setInterval(() => {
+            if (striking[name]) {
+                return;
+            }
+            
             let ownedAmt = +ownedText.innerHTML;
             for (let i = 0; i < ownedAmt; i++) {
                 callback();
@@ -142,7 +156,6 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     let owned = localStorage.getItem(name) != null ? true : false;
     if (owned) {
         callback();
-        return;
     }
 
     let upgradeShop = document.getElementById("onetime-upgrade-shop-container");
@@ -150,6 +163,25 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     let titleText = document.createElement("p");
     let costText = document.createElement("p");
     let titleCostContainer = document.createElement("div");
+    let ownedText = document.createElement("p");
+
+    ownedText.className = "upgrade-owned";
+    ownedText.innerText = "0";
+    ownedText.style.display = "none";
+    button.appendChild(ownedText);
+
+    let fullCostText = document.createElement("p");
+    fullCostText.className = "original-cost-text";
+    fullCostText.innerText = cost;
+    fullCostText.style.display = "none";
+
+    let localStorageItem = localStorage.getItem(name);
+    if (localStorageItem) {
+        ownedText.innerText = "1";
+        button.style.display = "none";
+    }
+
+    button.id = name + "-upgrade";
 
     let existingUpgradeJson = localStorage.getItem(name);
     if (existingUpgradeJson != null) {
@@ -216,6 +248,7 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     titleCostContainer.appendChild(titleText);
     titleCostContainer.appendChild(costText);
     button.appendChild(titleCostContainer);
+    button.appendChild(fullCostText);
     upgradeShop.appendChild(button);
 
     button.addEventListener("click", (ev) => {
@@ -223,11 +256,12 @@ function createOneTimeUpgrade(name, description, cost, callback) {
             let clicks = getClicks();
             let costNum = +cost;
 
-            if (clicks >= costNum) {
-                removeClicks(cost);
+            if (clicks >= costNum * globalPriceMultiplier) {
+                removeClicks(costNum * globalPriceMultiplier);
                 callback();
                 localStorage.setItem(name, true);
-                button.parentElement.removeChild(button);
+                button.style.display = "none";
+                ownedText.innerText = "1";
                 saveClicks();
             }
         }
