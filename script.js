@@ -32,10 +32,10 @@ addEventListener("resize", (event) => {
 
     if (width < 768) {
         let headerHeight = header.offsetHeight;
-        tabs.style.paddingTop = headerHeight + "px";
-        tabs.style.justifyContent = "left";
-        tabs.style.left = 0;
-        tabs.style.paddingLeft = "-1.5svh";
+        // tabs.style.paddingTop = headerHeight + "px";
+        // tabs.style.justifyContent = "left";
+        // tabs.style.left = 0;
+        // tabs.style.paddingLeft = "-1.5svh";
     } else {
         tabs.style.paddingTop = "";
         tabs.style.justifyContent = "right";

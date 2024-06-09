@@ -115,7 +115,7 @@ p {
     text-align: center;
 }
 
-main>p {
+main > p {
     display: none;
 }
 
@@ -276,6 +276,14 @@ input:checked+.slider:before {
     .navanchor {
         padding-left: calc(var(--width-scale) * 1.5);
         padding-top: calc(var(--height-scale) * 2.4);
+    }
+
+    #tabs {
+        padding: 0;
+        margin: 0;
+        left: 2px;
+        top: 24px;
+        justify-content: left;
     }
 
     .config {
