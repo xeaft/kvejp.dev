@@ -9,8 +9,8 @@ let clickDelay = 200;
 let animationLength = 100;
 let explosionChance = 150;
 let basementOwned = false;
-let basementSize = 0;
-let farmersPerFarm = 6
+let basementSize = 2;
+let farmersPerFarm = 4;
 let upgradeMultipliers = {};
 let ratOwned = false;
 let ratClickChance = 5;
@@ -18,6 +18,7 @@ let ratClickMultiplier = 1.1;
 let globalPriceMultiplier = 1;
 let priceMultipliers = {};
 let striking = {};
+let upgradeObjects = {};
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -118,20 +119,21 @@ function clickWatermelon(x, y) {
 }
 
 watermelon.addEventListener("click", ev => {
-    if (ev.button == 0 && !watermelonGone) {
+    if (ev.button == 0 && !watermelonGone && !isMobile) {
         clickWatermelon(ev.clientX, ev.clientY)
     }
-})
+});
 
 watermelon.addEventListener("touchend", (ev) => {
     if (!watermelonGone) {
         let touch = ev.changedTouches[0];
         clickWatermelon(touch.clientX, touch.clientY);
     }
-})
+});
 
 let mobileUpgradeButtons = document.getElementsByClassName("mobile-upgrade-category-button");
 let upgradeShops = document.getElementsByClassName("upgrade-shop");
+
 for (let btt of mobileUpgradeButtons) {
     btt.addEventListener("touchend", (ev) => {
         for (let btt2 of mobileUpgradeButtons) {

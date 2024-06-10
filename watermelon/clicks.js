@@ -17,7 +17,7 @@ function saveClicks() {
 }
 
 function getUpgradeCount(upgrade) {
-    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    let upgradeButton = getUpgradeObject(upgrade);
     if (upgradeButton == null) {
         return 0;
     }
@@ -26,7 +26,7 @@ function getUpgradeCount(upgrade) {
 }
 
 function getUpgradeCost(upgrade) {
-    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    let upgradeButton = getUpgradeObject(upgrade);
     if (upgradeButton == null) {
         return 0;
     }
@@ -39,7 +39,7 @@ function buyUpgrade(upgrade, amt, force) {
         amt = 1;
     }
     
-    let upgradeButton = document.getElementById(`${upgrade}-upgrade`);
+    let upgradeButton = getUpgradeObject(upgrade);
     if (upgradeButton) {
         if (force) {
             console.log(
@@ -98,7 +98,7 @@ function updateClicksText() {
         }
     }
 
-    document.getElementById("clicks-count").innerText = Math.round(clicks);
+    document.getElementById("clicks-count").innerText = Math.floor(clicks);
 }
 
 function createToastNotification(text) {
@@ -155,6 +155,10 @@ function rollXBuff() {
     let buffIndex = Math.round(Math.random() * (buffNames.length - 1));
     let buffName = buffNames[buffIndex];
     spawnBuff(buffName);
+}
+
+function getUpgradeObject(upgradeName) {
+    return document.getElementById(`${upgradeName}-upgrade`);
 }
 
 setInterval(saveClicks, 0.167 * 1000 * 60);

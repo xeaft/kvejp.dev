@@ -1,4 +1,4 @@
-function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId, execOnceFunc, execOnceType) {
+function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId) {
     let upgradeShop = document.getElementById(upgradeShopId);
     let button = document.createElement("div");
     let titleText = document.createElement("p");
@@ -6,7 +6,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     let titleCostContainer = document.createElement("div");
     let ownedText = document.createElement("p");
     let ownedAmt = 0;
-
+    let onLevelUpgradeEvents = [];
+    let onUpgradeEvents = [];
+    let allowUpgrades = true;
+    
     upgradeMultipliers[name] = 1;
     priceMultipliers[name] = 1;
     striking[name] = false;
@@ -48,38 +51,57 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     button.appendChild(ownedText);
     button.appendChild(fullCostText);
     upgradeShop.appendChild(button);
-    
+
+    function upgradeItem() {
+        if (!allowUpgrades) {
+            return null;
+        }
+
+        let clicks = getClicks();
+        let costNum = +cost;
+
+        if (clicks >= costNum * globalPriceMultiplier) {
+            removeClicks(costNum * globalPriceMultiplier);
+            let ownedAmt = +ownedText.innerHTML;
+            cost = getNextCost(cost, ownedAmt);
+            ownedAmt += 1;
+            ownedText.innerHTML = ownedAmt;
+            costText.innerHTML = Math.ceil(cost);
+            fullCostText.innerText = Math.ceil(cost);
+
+            let jsonObj = {
+                owned: ownedAmt,
+                cost: cost
+            };
+
+            localStorage.setItem(name, JSON.stringify(jsonObj));
+            saveClicks();
+
+            if (execOnce) {
+                callback();
+            }
+            
+            for (let onLevelEvent of onLevelUpgradeEvents) {
+                if (typeof onLevelEvent == "function") {
+                    onLevelEvent();
+                }
+            }
+            
+            for (let onUpgradeEvent of onUpgradeEvents) {
+                if (typeof onUpgradeEvent == "function") {
+                    onUpgradeEvent();
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 
     button.addEventListener("click", (ev) => {
         if (ev.button == 0) {
-            let clicks = getClicks();
-            let costNum = +cost;
-
-            if (clicks >= costNum * globalPriceMultiplier) {
-                removeClicks(costNum * globalPriceMultiplier);
-                let ownedAmt = +ownedText.innerHTML;
-                cost = getNextCost(cost, ownedAmt);
-                ownedAmt += 1;
-                ownedText.innerHTML = ownedAmt;
-                costText.innerHTML = Math.ceil(cost);
-                fullCostText.innerText = Math.ceil(cost);
-
-                let jsonObj = {
-                    owned: ownedAmt,
-                    cost: cost
-                };
-
-                localStorage.setItem(name, JSON.stringify(jsonObj));
-                saveClicks();
-
-                if (execOnce) {
-                    callback();
-                }
-
-                if (typeof execOnceFunc == "function" && execOnceType == "onclick") {
-                    execOnceFunc();
-                }
-            }
+            upgradeItem();
         }
     });
 
@@ -143,15 +165,88 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         }, delay);
     }
 
-    if (typeof execOnceFunc == "function" && execOnceType != "onclick") {
-        execOnceFunc();
+    function addLevelEventFunction(targetLevel, callback, autoCallAfter) {
+        if (autoCallAfter) {
+            let upgrades = getUpgradeCount(name);
+            if (upgrades >= targetLevel) {
+                callback();
+                return;
+            }
+        }
+
+        function onUpgradeHelper() {
+            let upgrades = getUpgradeCount(name);
+
+            if (upgrades < targetLevel) {
+                return;
+            }
+            
+            if (upgrades > targetLevel) {
+                let index = onLevelUpgradeEvents.indexOf(onUpgradeHelper);
+                if (index > -1) {
+                    onLevelUpgradeEvents.splice(index, 1);
+                }
+                return;
+            }
+            
+            callback();
+
+            let index = onLevelUpgradeEvents.indexOf(onUpgradeHelper);
+            if (index > -1) {
+                onLevelUpgradeEvents.splice(index, 1);
+            }
+        }
+    
+        onLevelUpgradeEvents.push(onUpgradeHelper);
     }
 
-    return button;
+    function addOnUpgradeEvent(callback, autoCallOnPageload) {
+        if (autoCallOnPageload) {
+            callback();
+        }
+
+        onUpgradeEvents.push(callback);
+    }
+
+    function preventUpgrades(disabled) {
+        allowUpgrades = !disabled;
+    }
+
+    function sellItem() {
+        return false;
+    }
+
+    function hide() {
+        button.style.display = "none";
+    }
+
+    function show() {
+        button.style.display = "flex";
+    }
+
+    function isVisible() {
+        return button.style.display == "flex";
+    }
+
+    let upgradeObject = {
+        "button": button,
+        "addLevelEvent": addLevelEventFunction,
+        "addOnUpgradeEvent": addOnUpgradeEvent,
+        "hide": hide,
+        "show": show,
+        "isVisible": isVisible,
+        "upgrade": upgradeItem,
+        "sell": sellItem,
+        "preventUpgrades": preventUpgrades
+    }
+
+    upgradeObjects[name] = upgradeObject;
+
+    return upgradeObject;
 }
 
-function createUpgrade(name, description, cost, callback, delay, execOnceFunc, execOnceType) {
-    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", execOnceFunc, execOnceType);
+function createUpgrade(name, description, cost, callback, delay) {
+    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container");
 }
 
 function createOneTimeUpgrade(name, description, cost, callback) {
@@ -306,6 +401,7 @@ function calculateEfficiency(workers, maxWorkers, workspaces) {
 
     return efficiency = totalMaxWorkers / workers;  
 }
+
 function closenessLevel(x, y) {
     let difference = Math.abs(x - y);
     let maxDifference = Math.max(x, y);

@@ -191,6 +191,10 @@ p {
         background-color: #222;
         font-weight: bold;
     }
+
+    #status-effect-container {
+        display: none;
+    }
 }
 
 .click-text {
@@ -266,4 +270,24 @@ p {
         transform: translateY(0) translateX(-50%);
         opacity: 0;
     }
+}
+
+#status-effect-container {
+    position: absolute;
+    top: 8svh;
+    left: 2vw;
+    width: 8vw;
+    height: 3svh;
+    background-color: #131313;
+    border: 2px solid #00ACAA;
+    display: none;
+}
+
+.status-effect-text {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 3svh;
+    padding-left: 2px;
+    padding-right: 2px;
 }
