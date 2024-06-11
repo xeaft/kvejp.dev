@@ -22,7 +22,6 @@ p {
     position: absolute;
     width: 15vw;
     right: 0;
-    border-top: 2px solid #440000;
     border-left: 2px solid #440000;
     border-bottom: 2px solid #440000;
     overflow-y: hidden;
@@ -34,19 +33,44 @@ p {
 }
 
 #upgrade-shop {
-    top: 22svh;
+    top: 6svh;
     height: calc(59svh - 2px);
+    border-top: 2px solid #440000;
 }
 
-#onetime-upgrade-shop {
-    top: 6svh;
-    height: calc(15svh - 2px);
+#onetime-upgrade-shop, #clicker-upgrade-shop {
+    top: 4svh;
+    height: calc(100% - 4svh);
     align-items: center;
 }
 
 #clicker-upgrade-shop {
-    height: calc(15svh - 2px);
-    top: 82svh;
+    display: none;
+}
+
+#clicker-onetime-shops-container {
+    position: absolute;
+    top: 66svh;
+    height: 31svh;
+    right: 0;
+    width: 15vw;
+    border-top: 2px solid #440000;
+    border-left: 2px solid #440000;
+}
+
+#pc-other-shops-container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 4svh;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.pc-upgrade-category-button {
+    width: 100%;
+    background-color: #131313;
+    border-bottom: 2px solid #440000;
 }
 
 .upgrade-shop::-webkit-scrollbar {
@@ -137,8 +161,9 @@ p {
 
 @media screen and (max-width: 767px) {
     .upgrade-shop {
-        width: 100%;
+        width: calc(100% - 4px);
         left: 0;
+        border: 2px solid #400;
     }
 
     #upgrade-shop {
@@ -186,15 +211,30 @@ p {
         background-color: #181818;
     }
 
-    .mobile-upgrade-category-button.active {
-        color: rgb(45, 130, 216);
-        background-color: #222;
-        font-weight: bold;
-    }
-
     #status-effect-container {
         display: none;
     }
+}
+
+.pc-upgrade-category-container {
+    display: flex;
+    position: absolute;
+    top: 60svh;
+    height: 5svh;
+    width: 100vw;
+    margin: 0;
+    left: 0;
+    justify-content: space-around;
+}
+
+.pc-upgrade-category-button:hover {
+    background-color: #181818;
+}
+
+.active {
+    color: rgb(45, 130, 216);
+    background-color: #222;
+    font-weight: bold;
 }
 
 .click-text {

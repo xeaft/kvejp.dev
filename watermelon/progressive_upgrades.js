@@ -10,34 +10,62 @@ let workerUpgrade = createUpgrade("worker", "a worker in your basement. you must
     }
 }, 50);
 
-let grandpaKvejplUpgrade = createUpgrade("grandpa kvejpl", "grows melons in his basement", 100, () => {
-    addClicks(0.15 * upgradeMultipliers["grandpa kvejpl"]);
+let grandpaKvejplUpgrade = createUpgrade("grandpa kvejpl", "grows melons in his basement", 100, (name) => {
+    addClicks(0.15 * upgradeMultipliers[name]);
 }, 50, () => {showUpgradeButton("farmer")}, "onclick");
 
-let farmerUpgrade = createUpgrade("farmer", "useful people for farming melons", 400, () => {
-    addClicks(0.7 * upgradeMultipliers.farmer);
+let farmerUpgrade = createUpgrade("farmer", "useful people for farming melons", 400, (name) => {
+    addClicks(0.7 * upgradeMultipliers[name]);
 }, 50, () => {showUpgradeButton("melon farm")}, "onclick");
 
-let farmUpgrade = createUpgrade("melon farm", "a farm with melons, works better with 6 farmers", 800, () => {
+let farmUpgrade = createUpgrade("melon farm", "a farm with melons, works better with 6 farmers", 800, (name) => {
     let farmAmt = getUpgradeCount("melon farm");
     let farmerAmt = getUpgradeCount("farmer") + getUpgradeCount("experienced farmer");
     let closeness = closenessLevel(farmAmt * farmersPerFarm, farmerAmt) / 5;
-    addClicks(1.5 * closeness * upgradeMultipliers["melon farm"]);
+    addClicks(1.5 * closeness * upgradeMultipliers[name]);
 }, 50, () => {showUpgradeButton("farmer")}, "experienced farmer");
 
-let experiencedFarmerUpgrade = createUpgrade("experienced farmer", "almost robotic. can work without a farm, somehow", 8000, () => {
-    addClicks(30 * upgradeMultipliers["experienced farmer"]);
+let experiencedFarmerUpgrade = createUpgrade("experienced farmer", "almost robotic. can work without a farm, somehow", 8000, (name) => {
+    addClicks(25 * upgradeMultipliers[name]);
 }, 50);
 
-experiencedFarmerUpgrade.addLevelEvent(100, () => {
-    showUpgradeButton("mecha arm");
-});
+let melonMineUpgrade = createUpgrade("melon mine", "an abandoned mine with plenty of melons", 20_000, (name) => {
+    addClicks(70 * upgradeMultipliers[name]);
+}, 50);
 
+let melonIntelligenceUpgrade = createUpgrade("melon intelligence", "plant with intelligent new tools. everywhere melons matter.", 65_000, (name) => {
+    addClicks(250 * upgradeMultipliers[name]);
+}, 50);
 
-farmerUpgrade.hide();
-farmUpgrade.hide();
-experiencedFarmerUpgrade.hide();
+let melonFactoryUpgrade = createUpgrade("melon factory", "melon! = ?", 350_000, (name) => {
+    addClicks(1200 * upgradeMultipliers[name]);
+}, 50);
 
+let melonPlantationUpgrade = createUpgrade("melon plantation", "theyre more efficient than farms", 1_250_000, (name) => {
+    addClicks(4750 * upgradeMultipliers[name]);
+}, 50);
+
+let melonEmpireUpgrade = createUpgrade("melon empire", "en empire made out of melons, not sure how it helps though", 22_750_000, (name) => {
+    addClicks(75_000 * upgradeMultipliers[name]);
+}, 50);
+
+// let karelTheDinosaur = createUpgrade("karel the dinosaur", "a sentient dinosaur. needs to be communicated with using the talafon", 175_500_000, (name) => {
+//     if (!getUpgradeCount("talafon")) {
+//         addClicks(525_000 * upgradeMultipliers[name]);
+//     }
+// }, 50);
+
+let melonScientistUpgrade = createUpgrade("melon scientist", "because science can make melons.", 400_000_000, (name) => {
+    addClicks(1_100_000 * upgradeMultipliers[name]);
+}, 50);
+
+let comelonMinusPcUpgrade = createUpgrade("comelon minus pc", "melons with pre-installed spyware. runs really quickly tho", 1_500_000_000, (name) => {
+    addClicks(3_500_000 * upgradeMultipliers[name]);
+}, 50);
+
+let asdasd = createUpgrade("melon gpt", "plant with intelligent new tools. everywhere melons matter.", 7_500_000_000, (name) => {
+    addClicks(1_100_000 * upgradeMultipliers[name]);
+}, 50);
 
 presserUpgraede.addLevelEvent(100, () => {
     if (getUpgradeCount("golden pressers")) {
@@ -53,9 +81,6 @@ workerUpgrade.addLevelEvent(100, () => {
     showUpgradeButton("worker raise");
 });
 
-grandpaKvejplUpgrade.addLevelEvent(1, () => {
-    farmerUpgrade.show();
-}, true);
 grandpaKvejplUpgrade.addLevelEvent(100, () => {
     if (getUpgradeCount("legacy tools")) {
         return;
@@ -63,9 +88,6 @@ grandpaKvejplUpgrade.addLevelEvent(100, () => {
     showUpgradeButton("legacy tools");
 });
 
-farmerUpgrade.addLevelEvent(1, () => {
-    farmUpgrade.show();
-}, true);
 farmerUpgrade.addLevelEvent(100, () => {
     if (getUpgradeCount("modern tractors")) {
         return;
@@ -76,6 +98,20 @@ farmerUpgrade.addLevelEvent(100, () => {
 farmUpgrade.addLevelEvent(100, () => {
     showUpgradeButton("soil soaker");
 });
-farmUpgrade.addLevelEvent(1, () => {
-    experiencedFarmerUpgrade.show();
-}, true);
+
+experiencedFarmerUpgrade.addLevelEvent(100, () => {
+    showUpgradeButton("mecha arm");
+});
+
+let entries = Object.entries(upgradeObjects);
+for (let [index, [_key, val]] of Object.entries(upgradeObjects).entries()) {
+    if (index < 3) {
+        continue;
+    }
+
+    val.hide();
+
+    entries[index - 1][1].addLevelEvent(1, () => {
+        val.show();
+    }, true);
+}

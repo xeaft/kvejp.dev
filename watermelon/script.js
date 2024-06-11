@@ -161,3 +161,78 @@ for (let btt of mobileUpgradeButtons) {
         btt.classList.add("active");
     })
 }
+
+let pcUpgradeButtons = document.getElementsByClassName("pc-upgrade-category-button");
+
+for (let btt of pcUpgradeButtons) {
+    btt.addEventListener("click", (ev) => {
+        if (ev.button != 0) {
+            return;
+        }
+
+        for (let btt2 of pcUpgradeButtons) {
+            btt2.classList.remove("active");
+        };
+        
+        let buttonType = "onetime";
+        let buttonText = btt.querySelector("p").innerText;
+
+        if (buttonText == "Other") {
+            buttonType =  "clicker";
+        }
+
+        for (let uShop of upgradeShops) {
+            let shopType = uShop.id;
+            if (shopType.startsWith("upgrade")) {
+                continue;
+            }
+
+            if (shopType.startsWith(buttonType)) {
+                uShop.style.display = "flex";
+            } else {
+                uShop.style.display = "none";
+            }
+        }
+
+        btt.classList.add("active");
+    })
+}
+
+window.addEventListener('resize', function() {
+    let clickerUpgradeShop = document.getElementById("clicker-upgrade-shop");
+    let onetimeUpgradeShop = document.getElementById("onetime-upgrade-shop");
+    let mainElement = this.document.getElementsByTagName("main")[0];
+    let pcShopsContainer = this.document.getElementById("clicker-onetime-shops-container");
+    let pcShopButtonContainer = this.document.getElementById("pc-other-shops-container");
+    let upgradeShop = this.document.getElementById("upgrade-shop");
+    let mobileButtons = this.document.getElementsByClassName("mobile-upgrade-category-button");
+
+    if (this.window.innerWidth < 768) {
+        mainElement.appendChild(clickerUpgradeShop);
+        mainElement.appendChild(onetimeUpgradeShop);
+        pcShopsContainer.style.display = "none";
+        
+        let touch = new Touch({
+            identifier: Date.now(),
+            target: pcShopButtonContainer.children[0],
+            clientX: 0,
+            clientY: 0
+        });
+        
+        let touchList = [touch];
+        
+        let touchEndEvent = new TouchEvent('touchend', {
+            changedTouches: touchList 
+        });
+    
+        mobileButtons[0].dispatchEvent(touchEndEvent);
+    } else {
+        pcShopsContainer.style.display = "flex";
+        pcShopsContainer.appendChild(clickerUpgradeShop);
+        pcShopsContainer.appendChild(onetimeUpgradeShop);
+        upgradeShop.style.display = "flex";
+        pcShopButtonContainer.children[0].click();
+    }    
+});
+
+window.dispatchEvent(new Event('resize'));

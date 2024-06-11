@@ -25,7 +25,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     
     if (execOnce) {
         for (let i = 0; i < ownedAmt; i++) {
-            callback();
+            callback(name);
         }
     }
 
@@ -78,7 +78,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
             saveClicks();
 
             if (execOnce) {
-                callback();
+                callback(name);
             }
             
             for (let onLevelEvent of onLevelUpgradeEvents) {
@@ -160,7 +160,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
 
             let ownedAmt = +ownedText.innerHTML;
             for (let i = 0; i < ownedAmt; i++) {
-                callback();
+                callback(name);
             }
         }, delay);
     }
@@ -228,6 +228,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         return button.style.display == "flex";
     }
 
+    function getlvlupg() {
+        return onLevelUpgradeEvents
+    }
+
     let upgradeObject = {
         "button": button,
         "addLevelEvent": addLevelEventFunction,
@@ -237,7 +241,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         "isVisible": isVisible,
         "upgrade": upgradeItem,
         "sell": sellItem,
-        "preventUpgrades": preventUpgrades
+        "preventUpgrades": preventUpgrades,
+        "getLevelEvents": getlvlupg
     }
 
     upgradeObjects[name] = upgradeObject;

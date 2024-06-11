@@ -36,3 +36,7 @@ mouseUpgrade.addLevelEvent(80, () => {
     mouseUpgrade.hide();
     mouseUpgrade.preventUpgrades(true);
 }, true);
+
+// borbUpgrade.addLevelEvent(50, () => {
+//     upgradeObjects["fast borbs"].show();
+// }, true);

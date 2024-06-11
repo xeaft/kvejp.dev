@@ -1,3 +1,4 @@
+// early upgrades
 
 createOneTimeUpgrade("melon basement", "a large space for workers and melons", 400, () => {
     basementOwned = true;
@@ -35,6 +36,8 @@ createOneTimeUpgrade("RATs", "every click has a 5% chance to give extra melons",
     ratOwned = true;
 });
 
+// level 100 upgrades
+
 createOneTimeUpgrade("golden pressers", "pressers are made out of gold", 80_000, () => {
     upgradeMultipliers["presser"] += 2;
 });
@@ -57,5 +60,40 @@ createOneTimeUpgrade("soil soaker", "makes your soil wet, and thats good. just d
 
 createOneTimeUpgrade("mecha arm", "experience...? actually, they might just be robots afterall", 60_000_000, () => {
     upgradeMultipliers["experienced farmer"] += 2;
-    createToastNotification("you reached the last/final upgrade, for now. more updates soon");
+});
+
+createOneTimeUpgrade("fortunate miners", "your miners are really fortunate.", 150_000_000, () => {
+    upgradeMultipliers["melon mine"] += 2;
+});
+
+createOneTimeUpgrade("melonpad calculator", "theres a calculator now, congrats", 1_000_000_000, () => {
+    upgradeMultipliers["melon intelligence"] += 2;
+});
+
+createOneTimeUpgrade("electricity overflow", "lot of volatge, thats for sure", 10_000_000_000, () => {
+    upgradeMultipliers["melon factory"] += 2;
+});
+
+createOneTimeUpgrade("brownfields", "they might just do more harm than good, but thats fine", 25_000_000_000, () => {
+    upgradeMultipliers["melon plantation"] += 2;
+});
+
+createOneTimeUpgrade("overthrow", "the people will overthrow the king as hes a tyrant", 200_000_000_000, () => {
+    upgradeMultipliers["melon empire"] += 2;
+});
+
+createOneTimeUpgrade("advanced bottles", "throwing bottles is what they do. or atleast in the movies.", 10_000_000_000_000, () => {
+    upgradeMultipliers["melon scientiest"] += 2;
+});
+
+createOneTimeUpgrade("melons 11 debloat", "", 35_000_000_000_000, () => {
+    upgradeMultipliers["comelon minus pc"] += 2;
+});
+
+createOneTimeUpgrade("gpt premium", "just a premium version of the melon-generating ai", 100_000_000_000_000, () => {
+    upgradeMultipliers["melon gpt"] += 2;
+});
+
+createOneTimeUpgrade("fast borbs", "", 10_000_000, () => {
+    extraClickMultiplier += 3;
 });

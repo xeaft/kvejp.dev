@@ -62,7 +62,13 @@ let debuffs = {
         () => {
             melonMultiplier += 0.5;
         }
-    ]
+    ],
+    // "micromelon recall": [
+    //     -1,
+    //     () => {
+
+    //     }
+    // ]
 }
 
 function spawnDebuff(debuffType) {
