@@ -20,6 +20,9 @@ let priceMultipliers = {};
 let striking = {};
 let upgradeObjects = {};
 let heldKeys = {};
+let isMobileUI = false;
+let mobileMultibuyAmount = 1;
+let mobileMultibuyOptions = [1, 10, 50, 100];
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -222,8 +225,9 @@ window.addEventListener('resize', () => {
     let pcShopButtonContainer = this.document.getElementById("pc-other-shops-container");
     let upgradeShop = this.document.getElementById("upgrade-shop");
     let mobileButtons = this.document.getElementsByClassName("mobile-upgrade-category-button");
+    isMobileUI = this.window.innerWidth < 768;
 
-    if (this.window.innerWidth < 768) {
+    if (isMobileUI) {
         mainElement.appendChild(clickerUpgradeShop);
         mainElement.appendChild(onetimeUpgradeShop);
         pcShopsContainer.style.display = "none";
@@ -252,3 +256,19 @@ window.addEventListener('resize', () => {
 });
 
 window.dispatchEvent(new Event('resize'));
+
+let mobileMultibuyButton = document.getElementById("mobile-multibuy-button");
+mobileMultibuyButton.addEventListener("click", (ev) => {
+    if (ev.button == 0) {
+        let ind = mobileMultibuyOptions.indexOf(mobileMultibuyAmount);
+        if (ind == -1) {
+            createToastNotification("Invalid multibuy value", "#f44");
+            mobileMultibuyAmount = 1;
+            return;
+        }
+        let newInd = (ind + 1) % mobileMultibuyOptions.length;
+        mobileMultibuyAmount = mobileMultibuyOptions[newInd];
+
+        document.getElementById("mobile-multibuy-text").innerText = mobileMultibuyAmount;
+    }
+})

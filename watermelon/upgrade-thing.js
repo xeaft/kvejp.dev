@@ -54,12 +54,18 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     upgradeShop.appendChild(button);
 
     function upgradeItem(buyMultiple) {
-        if (heldKeys["Shift"] && !buyMultiple) {
-            upgradeItem(10);
-            return;
-        } else if (heldKeys["Control"] && !buyMultiple) {
-            upgradeItem(100);
-            return;
+        if (!allowUpgrades) {
+            return null;
+        }
+
+        if (!isMobileUI) {
+            if (heldKeys["Shift"] && !buyMultiple) {
+                upgradeItem(10);
+                return;
+            } else if (heldKeys["Control"] && !buyMultiple) {
+                upgradeItem(100);
+                return;
+            }       
         }
 
         if (buyMultiple && typeof buyMultiple == "number") {
@@ -67,9 +73,6 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
                 upgradeItem("multibuy");
             }
             return;
-        }
-        if (!allowUpgrades) {
-            return null;
         }
 
         let clicks = getClicks();
@@ -115,6 +118,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
 
     button.addEventListener("click", (ev) => {
         if (ev.button == 0) {
+            if (isMobileUI) {
+                upgradeItem(mobileMultibuyAmount);
+                return;
+            } 
             upgradeItem();
         }
     });
