@@ -25,23 +25,6 @@ let interval = setInterval(() => {
 let varScale = 1;
 let varUse = "svh";
 addEventListener("resize", (event) => {
-    let tabs = document.getElementById("tabs");
-    let header = document.getElementById("headerdiv");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-
-    // if (width < 768) {
-    //     let headerHeight = header.offsetHeight;
-    //     // tabs.style.paddingTop = headerHeight + "px";
-    //     // tabs.style.justifyContent = "left";
-    //     // tabs.style.left = 0;
-    //     // tabs.style.paddingLeft = "-1.5svh";
-    // } else {
-    //     tabs.style.paddingTop = "";
-    //     tabs.style.justifyContent = "right";
-    //     tabs.style.right = 0;
-    // }
-
     root.style.setProperty("--height-scale", `${varScale}${varUse}`);
     root.style.setProperty("--width-scale", `${varScale}${varUse}`);
 });

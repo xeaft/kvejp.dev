@@ -1,4 +1,4 @@
-function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId) {
+function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId, type) {
     let upgradeShop = document.getElementById(upgradeShopId);
     let button = document.createElement("div");
     let titleText = document.createElement("p");
@@ -9,7 +9,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     let onLevelUpgradeEvents = [];
     let onUpgradeEvents = [];
     let allowUpgrades = true;
-    
+    let originalCost = cost;
+
     upgradeMultipliers[name] = 1;
     priceMultipliers[name] = 1;
     striking[name] = false;
@@ -17,8 +18,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     let existingUpgradeJson = localStorage.getItem(name);
     if (existingUpgradeJson != null) {
         existingUpgradeJson = JSON.parse(existingUpgradeJson);
-        ownedAmt = existingUpgradeJson.owned;
-        cost = existingUpgradeJson.cost;
+        ownedAmt = +existingUpgradeJson.o;
+        cost = getCostForLevel(originalCost, ownedAmt);
     }
 
     let execOnce = typeof delay === 'string';
@@ -70,8 +71,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
             fullCostText.innerText = Math.ceil(cost);
 
             let jsonObj = {
-                owned: ownedAmt,
-                cost: cost
+                o: ownedAmt,
             };
 
             localStorage.setItem(name, JSON.stringify(jsonObj));
@@ -242,7 +242,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         "upgrade": upgradeItem,
         "sell": sellItem,
         "preventUpgrades": preventUpgrades,
-        "getLevelEvents": getlvlupg
+        "getLevelEvents": getlvlupg,
+        "type": type
     }
 
     upgradeObjects[name] = upgradeObject;
@@ -250,8 +251,34 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     return upgradeObject;
 }
 
-function createUpgrade(name, description, cost, callback, delay) {
-    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container");
+function createUpgrade(name, description, cost, callback, delay, type) {
+    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", type);
+}
+
+function markOneTimeUpgradeAsPurchased(upgradeName) {
+    let upgradeShop = document.getElementById("onetime-upgrade-shop-container");
+    let upgradeDiv = null;
+
+    for (let i of upgradeShop.children) {
+        let cUpradeName = i.id.split("-upgrade")[0];
+        if (cUpradeName == upgradeName) {
+            upgradeDiv = i;
+        }
+    }
+
+    if (!upgradeDiv) {
+        return;
+    }
+
+    upgradeDiv.classList.add("onetime-upgrade-purchased");
+    upgradeDiv.style.backgroundColor = "#141414";
+    let nameText = upgradeDiv.querySelectorAll("p")[1];
+    nameText.style.color = "#666";
+    let priceText = upgradeDiv.getElementsByClassName("upgrade-cost")[0];
+    priceText.innerText = "owned";
+    priceText.style.color = "#666";
+
+    upgradeShop.appendChild(upgradeDiv);
 }
 
 function createOneTimeUpgrade(name, description, cost, callback) {
@@ -280,7 +307,6 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     let localStorageItem = localStorage.getItem(name);
     if (localStorageItem) {
         ownedText.innerText = "1";
-        button.style.display = "none";
     }
 
     button.id = name + "-upgrade";
@@ -288,8 +314,27 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     let existingUpgradeJson = localStorage.getItem(name);
     if (existingUpgradeJson != null) {
         existingUpgradeJson = JSON.parse(existingUpgradeJson);
-        ownedAmt = existingUpgradeJson.owned;
+        ownedAmt = existingUpgradeJson.o;
         cost = existingUpgradeJson.cost;
+    }
+
+    titleText.innerText = name; 
+    costText.innerText = Math.ceil(+cost);
+    button.className = "upgrade-button";
+    costText.className = "upgrade-cost";
+    titleCostContainer.className = "upgrade-container";
+    button.style.backgroundColor = "#232323";
+    costText.style.marginLeft = "5%";
+
+    titleCostContainer.appendChild(titleText);
+    titleCostContainer.appendChild(costText);
+    button.appendChild(titleCostContainer);
+    button.appendChild(fullCostText);
+    upgradeShop.appendChild(button);
+
+    if (owned) {
+        markOneTimeUpgradeAsPurchased(name);
+        return;
     }
 
     let textSize = getTextSize(description);
@@ -297,7 +342,11 @@ function createOneTimeUpgrade(name, description, cost, callback) {
         if (isMobile) {
             return;
         }
-        
+
+        if (button.classList.contains("onetime-upgrade-purchased")) {
+            return;
+        }
+
         let thing = document.getElementById("upgrade-hover-text");
         if (thing) {
             thing.parentElement.removeChild(thing);
@@ -339,22 +388,12 @@ function createOneTimeUpgrade(name, description, cost, callback) {
         }
     });
 
-    titleText.innerText = name; 
-    costText.innerText = Math.ceil(+cost);
-    button.className = "upgrade-button";
-    costText.className = "upgrade-cost";
-    titleCostContainer.className = "upgrade-container";
-    button.style.backgroundColor = "#232323";
-    costText.style.marginLeft = "5%";
-
-    titleCostContainer.appendChild(titleText);
-    titleCostContainer.appendChild(costText);
-    button.appendChild(titleCostContainer);
-    button.appendChild(fullCostText);
-    upgradeShop.appendChild(button);
-
     button.addEventListener("click", (ev) => {
         if (ev.button == 0) {
+            if (button.classList.contains("onetime-upgrade-purchased")) {
+                return;
+            }
+
             let clicks = getClicks();
             let costNum = +cost;
 
@@ -362,21 +401,31 @@ function createOneTimeUpgrade(name, description, cost, callback) {
                 removeClicks(costNum * globalPriceMultiplier);
                 callback();
                 localStorage.setItem(name, true);
-                button.style.display = "none";
+                // button.style.display = "none";
                 ownedText.innerText = "1";
                 saveClicks();
+                markOneTimeUpgradeAsPurchased(name);
             }
         }
     });
 }
 
-function createClickerUpgrade(name, description, cost, callback, delay) {
-    return createAnyUpgrade(name, description, cost, callback, delay, "clicker-upgrade-shop-container");
+function createClickerUpgrade(name, description, cost, callback, delay, type) {
+    return createAnyUpgrade(name, description, cost, callback, delay, "clicker-upgrade-shop-container", type);
 }
 
 function getNextCost(currentCost, ownedAmt) {
-    // TODO: make a normal formula for this
     return currentCost + currentCost / 12;
+}
+
+function getCostForLevel(originalCost, level) {
+    let finalCost = originalCost;
+
+    for (let i = 0; i < level; i++) {
+        finalCost = getNextCost(finalCost);
+    }
+
+    return finalCost;
 }
 
 function getTextSize(text) {

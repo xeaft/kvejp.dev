@@ -86,7 +86,7 @@ createOneTimeUpgrade("advanced bottles", "throwing bottles is what they do. or a
     upgradeMultipliers["melon scientiest"] += 2;
 });
 
-createOneTimeUpgrade("melons 11 debloat", "", 35_000_000_000_000, () => {
+createOneTimeUpgrade("melons 11 debloat", "debloats your melons 11 operating system so it can run faster.", 35_000_000_000_000, () => {
     upgradeMultipliers["comelon minus pc"] += 2;
 });
 
@@ -94,6 +94,13 @@ createOneTimeUpgrade("gpt premium", "just a premium version of the melon-generat
     upgradeMultipliers["melon gpt"] += 2;
 });
 
-createOneTimeUpgrade("fast borbs", "", 10_000_000, () => {
+createOneTimeUpgrade("fast borbs", "theyre fast.", 10_000_000, () => {
     extraClickMultiplier += 3;
 });
+
+for (let i of Array.from(document.getElementById("onetime-upgrade-shop-container").children)) {
+    let text = i.id.split("-upgrade")[0];
+    if (getUpgradeCount(text)) {
+        markOneTimeUpgradeAsPurchased(text);
+    }
+}

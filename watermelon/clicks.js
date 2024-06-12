@@ -88,6 +88,10 @@ function showUpgradeButton(upgradeName) {
 function updateClicksText() {
     let costTexts = document.getElementsByClassName("upgrade-cost");
     for (let costText of costTexts) {
+        if (costText.parentElement.parentElement.classList.contains("onetime-upgrade-purchased")) {
+            continue;
+        }
+
         let oldCost = costText.parentElement.parentElement.querySelector(".original-cost-text").innerText;
         let cost = oldCost * globalPriceMultiplier;
         costText.innerText = Math.ceil(cost);        
@@ -101,7 +105,8 @@ function updateClicksText() {
     document.getElementById("clicks-count").innerText = Math.floor(clicks);
 }
 
-function createToastNotification(text) {
+function createToastNotification(text, colorOptional) {
+    let color = colorOptional ? colorOptional : "#ffd700";
     let textObj = document.createElement("p");
     let toasts = Array.from(document.getElementsByClassName("toast-notification"));
 
@@ -111,6 +116,7 @@ function createToastNotification(text) {
 
     textObj.className = "toast-notification";
     textObj.innerText = text;
+    textObj.style.color = color;
     document.body.appendChild(textObj);
     setTimeout(() => {
         textObj.parentElement.removeChild(textObj);
