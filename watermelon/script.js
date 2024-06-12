@@ -19,6 +19,7 @@ let globalPriceMultiplier = 1;
 let priceMultipliers = {};
 let striking = {};
 let upgradeObjects = {};
+let heldKeys = {};
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -105,29 +106,36 @@ function clickWatermelon(x, y) {
 
     addClicks(clicksToGet);
     updateClicksText();
-
     animationInProgress = true;
-    watermelon.style.scale = "120%";
 
-    setTimeout(() => {
-        watermelon.style.scale = "100%";
-    }, animationLength);
 
     setTimeout(() => {
         animationInProgress = false;
     }, clickDelay);
 }
 
-watermelon.addEventListener("click", ev => {
-    if (ev.button == 0 && !watermelonGone && !isMobile) {
-        clickWatermelon(ev.clientX, ev.clientY)
+watermelon.addEventListener("mousedown", (ev) => {
+    if (ev.button == 0) {
+        watermelon.style.scale = "120%";
     }
+});
+
+watermelon.addEventListener("mouseup", (ev) => {
+    if (ev.button == 0) {
+        clickWatermelon(ev.clientX, ev.clientY);
+        watermelon.style.scale = "100%";
+    }
+});
+
+watermelon.addEventListener("touchstart", (ev) => {
+    watermelon.style.scale = "120%";
 });
 
 watermelon.addEventListener("touchend", (ev) => {
     if (!watermelonGone) {
         let touch = ev.changedTouches[0];
         clickWatermelon(touch.clientX, touch.clientY);
+        watermelon.style.scale = "100%";
     }
 });
 
@@ -198,7 +206,15 @@ for (let btt of pcUpgradeButtons) {
     })
 }
 
-window.addEventListener('resize', function() {
+window.addEventListener("keydown", (ev) => {
+    heldKeys[ev.key] = true;
+});
+
+window.addEventListener("keyup", (ev) => {
+    heldKeys[ev.key] = false;
+});
+
+window.addEventListener('resize', () => {
     let clickerUpgradeShop = document.getElementById("clicker-upgrade-shop");
     let onetimeUpgradeShop = document.getElementById("onetime-upgrade-shop");
     let mainElement = this.document.getElementsByTagName("main")[0];
@@ -225,7 +241,7 @@ window.addEventListener('resize', function() {
             changedTouches: touchList 
         });
     
-        mobileButtons[0].dispatchEvent(touchEndEvent);
+        mobileButtons[1].dispatchEvent(touchEndEvent);
     } else {
         pcShopsContainer.style.display = "flex";
         pcShopsContainer.appendChild(clickerUpgradeShop);

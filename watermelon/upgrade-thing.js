@@ -53,7 +53,21 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     button.appendChild(fullCostText);
     upgradeShop.appendChild(button);
 
-    function upgradeItem() {
+    function upgradeItem(buyMultiple) {
+        if (heldKeys["Shift"] && !buyMultiple) {
+            upgradeItem(10);
+            return;
+        } else if (heldKeys["Control"] && !buyMultiple) {
+            upgradeItem(100);
+            return;
+        }
+
+        if (buyMultiple && typeof buyMultiple == "number") {
+            for (let i = 0; i < buyMultiple; i++) {
+                upgradeItem("multibuy");
+            }
+            return;
+        }
         if (!allowUpgrades) {
             return null;
         }
