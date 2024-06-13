@@ -8,7 +8,7 @@ settingsButton.addEventListener("click",  (ev) => {
     }
 
     settingsOpened = !settingsOpened;
-    openSettings(settingsOpened);
+    openSettings();
 });
 
 function createSetting(name, callback) {
@@ -72,33 +72,45 @@ createSetting("nothing is yet implemented", (enabled) => {
 createSetting("but it will be soon", (enabled) => {
 });
 
-function openSettings(openOrClose) {
-    if (openOrClose) {
-        let blurDiv = document.createElement("div");
-        let hr = document.createElement("hr");
-        let windowContainer = document.createElement("div");
-        let windowTitle = document.createElement("p");
-        let closeButton = document.createElement("div");
-        
-        blurDiv.className = "bg-blur-full blur-open";
+function openSettings() {
+    let blurDiv = document.createElement("div");
+    let hr = document.createElement("hr");
+    let windowContainer = document.createElement("div");
+    let windowTitle = document.createElement("p");
+    let closeButton = document.createElement("div");
+    
+    blurDiv.className = "bg-blur-full blur-open";
 
-        windowContainer.className = "info-window-container info-window-open";
-        windowContainer.id = "settings-window";
-        
-        windowTitle.className = "info-window-title";
-        windowTitle.innerText = "Settings";
+    windowContainer.className = "info-window-container info-window-open";
+    windowContainer.id = "settings-window";
+    
+    windowTitle.className = "info-window-title";
+    windowTitle.innerText = "Settings";
 
-        closeButton.id = "settings-close-button"
+    closeButton.id = "settings-close-button";
 
-        windowContainer.appendChild(closeButton);
-        windowContainer.appendChild(windowTitle);
-        windowContainer.appendChild(hr);
-        blurDiv.appendChild(windowContainer);
-        document.body.appendChild(blurDiv);
-
-        for (let i in settings) {
-            let settingObj = settings[i];
-            settingObj.create();
+    closeButton.addEventListener("click", (ev) => {
+        if (ev.button == 0) {
+            removeInfoWindow();
         }
+    });
+
+    function removeFunction(ev) {
+        if (ev.key == "Escape") {
+            removeInfoWindow();
+            document.body.removeEventListener("keydown", removeFunction);
+        }
+    }
+    document.body.addEventListener("keydown", removeFunction);
+
+    windowContainer.appendChild(closeButton);
+    windowContainer.appendChild(windowTitle);
+    windowContainer.appendChild(hr);
+    blurDiv.appendChild(windowContainer);
+    document.body.appendChild(blurDiv);
+
+    for (let i in settings) {
+        let settingObj = settings[i];
+        settingObj.create();
     }
 }
