@@ -32,10 +32,10 @@ addEventListener("resize", (event) => {
 window.dispatchEvent(new Event("resize"));
 
 let allMainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
-let mainTextObjs = []
+let mainTextObjs = [];
 for (let i of allMainTextObjs) {
     let objClassList = Array.from(i.classList);
-    if (!objClassList.includes("important")) {
+    if (!objClassList.includes("important") && !objClassList.includes("noanimate")) {
         mainTextObjs.push(i);
     }
 }
@@ -68,11 +68,11 @@ function textRenderFunc(objIndex, interval) {
     currentTextIndex += nextPartLen;
     textIndex = currentTextIndex - objIndex * mainText.length;
     textObject.innerText = mainText.substring(0, textIndex);
-    return end
+    return end;
 }
 
 function textRenderIntervalFunc() {
-    let ended = textRenderFunc(currentObjectIndex, textRenderInterval)
+    let ended = textRenderFunc(currentObjectIndex, textRenderInterval);
     if (ended && currentObjectIndex < mainTextObjs.length - 1) {
         currentObjectIndex += 1;
         mainText = "";
@@ -98,16 +98,16 @@ function handleMouseHover(element, mode) {
     if (!mode) {
         element.addEventListener("mouseenter", () => {
             mouseTrail.style.boxShadow = "0 0 20px 8px #0ff";
-        })
+        });
     } else {
         element.addEventListener("mouseenter", () => {
             mouseTrail.style.boxShadow = "0 0 20px 8px #f00";
-        })
+        });
     }
 
     element.addEventListener("mouseleave", () => {
         mouseTrail.style.boxShadow = "0 0 50px 10px #fff";
-    })
+    });
 }
 
 for (let element of hoverableElements) {
@@ -167,4 +167,48 @@ let isMobile = userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|Windows Pho
 
 if (isMobile) {
     mouseTrail.style.display = "none";
+}
+
+function downloadFile(content, filename) {
+    let blob = new Blob([content], { type: 'text/plain' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function readFile(acceptType) {
+    return new Promise((resolve, reject) => {
+        let fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        if (acceptType) {
+            fileInput.accept = acceptType;
+        } 
+        fileInput.style.display = 'none';
+
+        fileInput.addEventListener('change', (event) => {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    let progressText = e.target.result;
+                    document.body.removeChild(fileInput);
+                    resolve(progressText);
+                };
+                reader.onerror = (e) => {
+                    document.body.removeChild(fileInput);
+                    reject(e);
+                };
+                reader.readAsText(file);
+            } else {
+                document.body.removeChild(fileInput);
+                reject(new Error("No file selected"));
+            }
+        });
+
+        document.body.appendChild(fileInput);
+        fileInput.click();
+    });
 }

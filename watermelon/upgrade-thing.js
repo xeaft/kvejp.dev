@@ -164,7 +164,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         if (thing) {
             thing.style.top = ev.clientY + "px";
         }
-    })
+    });
 
     button.addEventListener("mouseleave", (ev) => {
         let thing = document.getElementById("upgrade-hover-text");
@@ -250,7 +250,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     }
 
     function getlvlupg() {
-        return onLevelUpgradeEvents
+        return onLevelUpgradeEvents;
     }
 
     let upgradeObject = {
@@ -265,7 +265,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         "preventUpgrades": preventUpgrades,
         "getLevelEvents": getlvlupg,
         "type": type
-    }
+    };
 
     upgradeObjects[name] = upgradeObject;
 

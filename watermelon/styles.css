@@ -124,23 +124,13 @@ p {
     justify-content: start;
 }
 
-.progress-saveload-button {
-    width: fit-content;
-    height: 3svh;
-    background-color: #02335c;
-    margin-right: 0.7vw;
-    margin-left: 0.3vw;
-    padding-right: 0.5vw;
-    padding-left: 0.5vw;
-}
-
-.progress-saveload-button > p {
+.button > p {
     padding-left: 0;
     line-height: 3svh;
     padding-top: 0;
 }
 
-.progress-saveload-button:hover {
+.button:hover {
     cursor: pointer;
     background-color: #033e6e;
 }
@@ -391,6 +381,14 @@ p {
     object-fit: fill;
     left: calc(30vw);
     top: 20.5svh;
+}
+
+#compact-click-text {
+    color: #888;
+}
+
+#texts-container {
+    flex-direction: column;
 }
 
 @keyframes blurIn {

@@ -256,6 +256,20 @@ input:checked+.slider:before {
     color: rgb(26, 100, 124);
 }
 
+.button {
+    width: fit-content;
+    height: 3svh;
+    background-color: #02335c;
+    margin-right: 0.7vw;
+    margin-left: 0.3vw;
+    padding-right: 0.5vw;
+    padding-left: 0.5vw;
+}
+
+.button > p {
+    margin-top: 0;
+}
+
 @media screen and (min-width: 768px) {
     .navanchor {
         padding-left: calc(var(--width-scale) * 3);

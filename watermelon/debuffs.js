@@ -36,7 +36,7 @@ let buffs = {
             removeClicks(-(getClicks() / 10));
         }
     ]
-}
+};
 
 let debuffs = {
     "strike": [
@@ -69,7 +69,7 @@ let debuffs = {
 
     //     }
     // ]
-}
+};
 
 function spawnDebuff(debuffType) {
    spawnXbuff(debuffType, "Debuff");
@@ -111,7 +111,7 @@ function addStatusText(text, durationSeconds, XbuffType) {
             conatiner.style.display = "none";
             textElement.parentElement.removeChild(textElement);
         }
-    }, 1000)
+    }, 1000);
 }
 
 function spawnXbuff(buffType, type) {
@@ -126,7 +126,7 @@ function spawnXbuff(buffType, type) {
         return;
     }
 
-    addStatusText(buffType, buffTime / 1000, type)
+    addStatusText(buffType, buffTime / 1000, type);
     createToastNotification(`${type} gained - ${buffType} (${buff[0] / 1000}s)`);
 
     setTimeout(() => {

@@ -1,5 +1,6 @@
 let text = document.getElementsByTagName("p")[0];
 let watermelon = document.getElementsByTagName("img")[0];
+let compactClicksText = document.getElementById("compact-click-text");
 let watermelonGone = false;
 let animationInProgress = false;
 let clickMultiplier = 1;
@@ -22,7 +23,8 @@ let upgradeObjects = {};
 let heldKeys = {};
 let isMobileUI = false;
 let mobileMultibuyAmount = 1;
-let mobileMultibuyOptions = [1, 10, 50, 100];
+let mobileMultibuyOptions = [1, 5, 10, 50, 100];
+let clicksSinceLastSession = 0;
 
 function changeWatermelonState() {
     watermelon.src = "/assets/melon_popped.png";
@@ -30,7 +32,7 @@ function changeWatermelonState() {
 
     setTimeout(() => {
         text.innerText = getClicks();
-    }, 75)
+    }, 75);
 
     let bgdiv = document.getElementById("backgrounddiv");
     let hoverable = document.getElementsByClassName("-hoverable");
@@ -39,7 +41,7 @@ function changeWatermelonState() {
     let allThings = [...hoverable, ...texts];
     for (let i of allThings) {
         let oldTransition = i.style.transition;
-        i.style.transition = "none"
+        i.style.transition = "none";
         i.style.color = "red";
         setTimeout(() => {
             i.style.transition = oldTransition;
@@ -74,25 +76,44 @@ function clickWatermelon(x, y) {
 
     let clicksToGet = 1 * clickMultiplier * extraClickMultiplier * (isCritical ? ratClickMultiplier : 1);
     let randomOffset = Math.floor(Math.random() * 20) - 9;
-    let clickText = document.createElement("p");
-    let clickTextText = "+" + (Math.round(clicksToGet * 100) / 100);
-    let clickTextWidth = getTextSize(clickTextText)
-    clickText.className = "click-text";
-    clickText.innerText = clickTextText;
-    clickText.style.position = "absolute";
-    clickText.style.left = x - 10 + randomOffset - Math.floor(clickTextWidth.width / 2) + "px";
-    clickText.style.top = y - 30 + "px";
 
-    if (isCritical) {
-        clickText.style.color = "gold";
+    if (!settings.get("Compact Clicks Text")) {
+        let clickText = document.createElement("p");
+        let clickTextText = "+" + (Math.round(clicksToGet * 100) / 100);
+        let clickTextWidth = getTextSize(clickTextText);
+        clickText.className = "click-text";
+        clickText.innerText = clickTextText;
+        clickText.style.position = "absolute";
+        clickText.style.left = x - 10 + randomOffset - Math.floor(clickTextWidth.width / 2) + "px";
+        clickText.style.top = y - 30 + "px";
+        if (isCritical) {
+            clickText.style.color = "gold";
+        }
+
+        document.body.appendChild(clickText);
+        setTimeout(() => {
+            try {
+                clickText.parentElement.removeChild(clickText);
+            } catch {}
+        }, 4200);
+    } else {
+        let clicks = Math.round(clicksToGet * 100) / 100;
+        clicksSinceLastSession += clicks;
+        compactClicksText.innerText = `+ ${Math.round(clicksSinceLastSession * 100) / 100}`;
+        let cClicksSinceLastSession = clicksSinceLastSession;
+
+        setTimeout(() => {
+            if (cClicksSinceLastSession == clicksSinceLastSession) {
+               compactClicksText.innerText = ""; 
+            }
+        }, 2000);
     }
 
-    document.body.appendChild(clickText);
     setTimeout(() => {
-        clickText.parentElement.removeChild(clickText);
-    }, 4200);
+        if (settings.get("Low Detail Mode")) {
+            return;
+        }
 
-    setTimeout(() => {
         let dropImage = document.createElement("img");
         let xOffset = Math.min(600, window.innerWidth);
         let posX = Math.round(Math.random() * xOffset);
@@ -103,14 +124,16 @@ function clickWatermelon(x, y) {
         document.body.appendChild(dropImage);
 
         setTimeout(() => {
-            dropImage.parentElement.removeChild(dropImage);
+            try {
+                dropImage.parentElement.removeChild(dropImage);
+            } catch {}
         }, 6000);
     }, 350);
 
     addClicks(clicksToGet);
     updateClicksText();
-    animationInProgress = true;
 
+    animationInProgress = true;
 
     setTimeout(() => {
         animationInProgress = false;

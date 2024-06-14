@@ -17,6 +17,7 @@
     <link href="/main.css" rel="stylesheet">
     <link href="/404.css" rel="stylesheet">
     <script src="/script.js" defer></script>
+    <script src="/stringThing.js" defer></script>
     <script src="clicks.js" defer></script>
     <script src="script.js" defer></script>
     <script src="upgrade-thing.js" defer></script>
@@ -25,6 +26,7 @@
     <script src="clicker_upgrades.js" defer></script>
     <script src="upgrades_other.js" defer></script>
     <script src="config.js" defer></script>
+    <script src="config-handler.js" defer></script>
     <script src="debuffs.js" defer></script>
     <script src="settings.js" defer></script>
 </head>
@@ -46,8 +48,9 @@
     <main>
         <div id="status-effect-container"></div>
         <img src="/assets/melon.png" alt="melon" draggable="false">
-        <div>
+        <div id="texts-container">
             <p class="-hoverable2 maintext" id="clicks-count">0</p>
+            <p id="compact-click-text"></p>
         </div>
         <div id="global-settings-button"></div>
         <div id="mobile-multibuy-button"><p id="mobile-multibuy-text">1</p></div>
@@ -88,10 +91,10 @@
         </div>
     </main>
     <footer>
-        <div class="progress-saveload-button" id="save-progress"><p>Download Progress</p></div>
-        <div class="progress-saveload-button" id="load-progress"><p>Load Progress</p></div>
-        <div class="progress-saveload-button" id="transfer-progress"><p>Transfer Progress</p></div>
-        <div class="progress-saveload-button" id="delete-progress"><p>Delete Progress</p></div>
+        <div class="button" id="save-progress"><p>Download Progress</p></div>
+        <div class="button" id="load-progress"><p>Load Progress</p></div>
+        <div class="button" id="transfer-progress"><p>Transfer Progress</p></div>
+        <div class="button" id="delete-progress"><p>Delete Progress</p></div>
         <p id="policyText"><a href="/privacypolicy/">privacy policy</a></p>
     </footer>
     <div id="mousetrailer"></div>

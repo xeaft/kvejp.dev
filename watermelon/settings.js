@@ -1,6 +1,11 @@
 let settingsButton = document.getElementById("global-settings-button");
 let settingsOpened = false;
-let settings = {};
+let settings = {
+    get: (name) => {
+        return settingsModules[name].isEnabled();
+    }
+}
+let settingsModules = {};
 
 settingsButton.addEventListener("click",  (ev) => {
     if (ev.button != 0) {
@@ -12,7 +17,11 @@ settingsButton.addEventListener("click",  (ev) => {
 });
 
 function createSetting(name, callback) {
-    let enabled = false;
+    if (localStorage.getItem(name + "-setting") == null) {
+        localStorage.setItem(name + "-setting", false);
+    }
+
+    let enabled = localStorage.getItem(name + "-setting") == "false" ? false : true;
 
     function create() {
         let container = document.createElement("div");
@@ -20,10 +29,10 @@ function createSetting(name, callback) {
         let enabledText = document.createElement("p");
     
         nameText.innerText = name;    
-        nameText.style.color = "#c74848";
         nameText.className = "setting-text";
-        enabledText.style.color = "#c74848";
-        enabledText.innerText = "Disabled";
+        nameText.style.color = enabled ? "#48c759" : "#c74848";
+        enabledText.style.color = enabled ? "#48c759" : "#c74848";
+        enabledText.innerText = enabled ? "Enabled" : "Disabled";
         enabledText.className = "setting-text";   
         container.className = "setting-bg-container";
 
@@ -34,42 +43,51 @@ function createSetting(name, callback) {
         if (settingsWindow) {
             settingsWindow.appendChild(container);
         } 
-        
+
+        if (enabled) {
+            callback();
+        }
+    
         container.addEventListener("click", (ev) => {
             if (ev.button == 0) {
                 enabled = !enabled;
                 nameText.style.color = enabled ? "#48c759" : "#c74848";
                 enabledText.style.color = enabled ? "#48c759" : "#c74848";
                 enabledText.innerText = enabled ? "Enabled" : "Disabled";
-                callback(enabled);
+                localStorage.setItem(name + "-setting", enabled);
+                callback(enabled); 
             }
         });
-    }
-    let settingObject = {
-        "create": create
+    } 
+
+    function isEnabled() {
+        return enabled;
     }
 
-    settings[name] = settingObject;
+    let settingObject = {
+        "create": create,
+        isEnabled: isEnabled
+    };
+
+    settingsModules[name] = settingObject;
 
     return settingObject;
 }
 
 createSetting("Low Detail Mode", (enabled) => {
     if (enabled) {
-        // kill all particles, or something, idk
+        for (let i of Array.from(document.getElementsByClassName("drop-image"))) {
+            i.parentElement.removeChild(i);
+        }
     }
 });
 
-createSetting("LDM does nothing btw", (enabled) => {
-});
-
-createSetting("dont even bother", (enabled) => {
-});
-
-createSetting("nothing is yet implemented", (enabled) => {
-});
-
-createSetting("but it will be soon", (enabled) => {
+createSetting("Compact Clicks Text", (enabled) => {
+    if (enabled) {
+        for (let i of Array.from(document.getElementsByClassName("click-text"))) {
+            i.parentElement.removeChild(i);
+        }
+    }
 });
 
 function openSettings() {
@@ -79,9 +97,9 @@ function openSettings() {
     let windowTitle = document.createElement("p");
     let closeButton = document.createElement("div");
     
-    blurDiv.className = "bg-blur-full blur-open";
+    blurDiv.className = settings.get("Low Detail Mode") ? "bg-blur-full" : "bg-blur-full blur-open";
 
-    windowContainer.className = "info-window-container info-window-open";
+    windowContainer.className = settings.get("Low Detail Mode") ? "info-window-container" : "info-window-container info-window-open";
     windowContainer.id = "settings-window";
     
     windowTitle.className = "info-window-title";
@@ -101,6 +119,7 @@ function openSettings() {
             document.body.removeEventListener("keydown", removeFunction);
         }
     }
+
     document.body.addEventListener("keydown", removeFunction);
 
     windowContainer.appendChild(closeButton);
@@ -109,8 +128,8 @@ function openSettings() {
     blurDiv.appendChild(windowContainer);
     document.body.appendChild(blurDiv);
 
-    for (let i in settings) {
-        let settingObj = settings[i];
+    for (let i in settingsModules) {
+        let settingObj = settingsModules[i];
         settingObj.create();
     }
 }
