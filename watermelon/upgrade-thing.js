@@ -264,7 +264,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
         "sell": sellItem,
         "preventUpgrades": preventUpgrades,
         "getLevelEvents": getlvlupg,
-        "type": type
+        "type": type,
+        "callback": callback
     };
 
     upgradeObjects[name] = upgradeObject;

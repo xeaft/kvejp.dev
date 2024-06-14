@@ -104,7 +104,8 @@ function clickWatermelon(x, y) {
 
         setTimeout(() => {
             if (cClicksSinceLastSession == clicksSinceLastSession) {
-               compactClicksText.innerText = ""; 
+               compactClicksText.innerText = "";
+               clicksSinceLastSession = 0; 
             }
         }, 2000);
     }
@@ -295,3 +296,30 @@ mobileMultibuyButton.addEventListener("click", (ev) => {
         document.getElementById("mobile-multibuy-text").innerText = mobileMultibuyAmount;
     }
 })
+
+setInterval(() => {
+    // localStorage.setItem("last-online", Date.now());
+}, 1000);
+
+function getIdleRewards() {
+    let lastOnline = localStorage.getItem("last-online");
+    if (lastOnline === null) {
+        return
+    }
+    
+    lastOnlineSeconds = +lastOnline / 1000;
+    let cTimeSeconds = Date.now() / 1000;
+    let secondsPassed = cTimeSeconds - lastOnlineSeconds;
+    console.log(secondsPassed);
+    if (secondsPassed > 3000){
+        console.log("idle rewards!!§");
+        for (let i = 0; i < secondsPassed / 20; i++) {
+            for (let upgrade in upgradeObjects) {
+                let upgObj = upgradeObjects[upgrade];
+                if (getUpgradeCount(upgrade) > 0) {
+                    upgradeObjects[upgrade].callback(upgrade);
+                }
+            }
+        }
+    }
+}

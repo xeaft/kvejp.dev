@@ -47,6 +47,9 @@ function loadProgress(progress) {
     }
 
     for (let key in progressJson) {
+        if (key == "last-online") {
+            continue;
+        }
         localStorage.setItem(key, progressJson[key]);
     }
 
