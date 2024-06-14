@@ -298,28 +298,27 @@ mobileMultibuyButton.addEventListener("click", (ev) => {
 })
 
 setInterval(() => {
-    // localStorage.setItem("last-online", Date.now());
+    localStorage.setItem("last-online", Date.now());
 }, 1000);
 
 function getIdleRewards() {
     let lastOnline = localStorage.getItem("last-online");
     if (lastOnline === null) {
-        return
+        return;
     }
     
     lastOnlineSeconds = +lastOnline / 1000;
     let cTimeSeconds = Date.now() / 1000;
     let secondsPassed = cTimeSeconds - lastOnlineSeconds;
-    console.log(secondsPassed);
     if (secondsPassed > 3000){
-        console.log("idle rewards!!§");
         for (let i = 0; i < secondsPassed / 20; i++) {
             for (let upgrade in upgradeObjects) {
                 let upgObj = upgradeObjects[upgrade];
                 if (getUpgradeCount(upgrade) > 0) {
-                    upgradeObjects[upgrade].callback(upgrade);
+                    upgObj.callback(upgrade);
                 }
             }
         }
     }
+    localStorage.setItem("last-online", Date.now());
 }
