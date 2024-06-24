@@ -127,7 +127,6 @@ p {
 }
 
 main > p {
-    display: none;
     margin-top: 0;
     margin-bottom: 0.4svh;
 }
@@ -270,6 +269,10 @@ input:checked+.slider:before {
     margin-top: 0;
 }
 
+.stupidly-animated {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
     .navanchor {
         padding-left: calc(var(--width-scale) * 3);
@@ -295,10 +298,6 @@ input:checked+.slider:before {
 @media screen and (max-width: 767px) {
     footer {
         font-size: 10px;
-    }
-
-    #mousetrailer {
-        display: none;
     }
 
     .navanchor {

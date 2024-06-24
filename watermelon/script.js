@@ -26,42 +26,8 @@ let mobileMultibuyAmount = 1;
 let mobileMultibuyOptions = [1, 5, 10, 50, 100];
 let clicksSinceLastSession = 0;
 
-function changeWatermelonState() {
-    watermelon.src = "/assets/melon_popped.png";
-    text.innerText = "basil";
-
-    setTimeout(() => {
-        text.innerText = getClicks();
-    }, 75);
-
-    let bgdiv = document.getElementById("backgrounddiv");
-    let hoverable = document.getElementsByClassName("-hoverable");
-    let texts = document.getElementsByTagName("p");
-
-    let allThings = [...hoverable, ...texts];
-    for (let i of allThings) {
-        let oldTransition = i.style.transition;
-        i.style.transition = "none";
-        i.style.color = "red";
-        setTimeout(() => {
-            i.style.transition = oldTransition;
-        }, 20);
-    }
-
-    bgdiv.style.backgroundColor = "rgba(40, 0, 0, 0.8)";
-}
-
 function clickWatermelon(x, y) {
     if (animationInProgress) {
-        return;
-    }
-
-    let clicks = getClicks();
-
-    let num = Math.round(Math.random() * explosionChance * 10) % explosionChance;
-    if (num == 2 && clicks > 15) {
-        watermelonGone = true;
-        changeWatermelonState();
         return;
     }
 
