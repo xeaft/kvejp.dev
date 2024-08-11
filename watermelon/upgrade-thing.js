@@ -23,12 +23,6 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     }
 
     let execOnce = typeof delay === 'string';
-    
-    if (execOnce) {
-        for (let i = 0; i < ownedAmt; i++) {
-            callback(name);
-        }
-    }
 
     titleText.innerText = name; 
     costText.innerText = Math.ceil(+cost);
@@ -269,6 +263,12 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     };
 
     upgradeObjects[name] = upgradeObject;
+
+    if (execOnce) {
+        for (let i = 0; i < ownedAmt; i++) {
+            callback(name);
+        }
+    }
 
     return upgradeObject;
 }

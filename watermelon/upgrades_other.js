@@ -13,12 +13,32 @@ removeUpgradeButton("brownfields");
 removeUpgradeButton("electricity overflow");
 removeUpgradeButton("melonpad calculator");
 removeUpgradeButton("fortunate miners");
+removeUpgradeButton("more melons");
+removeUpgradeButton("diamond RATs");
+removeUpgradeButton("RATnip 2");
+removeUpgradeButton("strong borbs");
+removeUpgradeButton("big borbs");
+removeUpgradeButton("superior borbs");
+removeUpgradeButton("godlike borbs");
+
+if (!getUpgradeCount("RATs")) {
+    removeUpgradeButton("RAT food")
+    removeUpgradeButton("RATnip")    
+}
+if (!getUpgradeCount("diamond RATs")) {
+    removeUpgradeButton("diamond powder");
+    removeUpgradeButton("diamond purifier");
+}
+if (getUpgradeCount("borb") >= 100 && getUpgradeCount("RATnip") == 60 && getUpgradeCount("RAT food") == 70 && getUpgradeCount("RATnip 2") < 60) {
+    showUpgradeButton("RATnip 2");
+}
 
 presserUpgraede.addLevelEvent(100, () => {
     if (getUpgradeCount("golden pressers")) {
         return;
     }
     showUpgradeButton("golden pressers");
+    showUpgradeButton("more melons")
 }, true);
 
 workerUpgrade.addLevelEvent(100, () => {
@@ -82,6 +102,34 @@ experiencedFarmerUpgrade.addLevelEvent(100, () => {
     showUpgradeButton("fortunate miners");
 }, true);
 
+borbUpgrade.addLevelEvent(70, () => {
+    showUpgradeButton("strong borbs");
+}, true)
+
+borbUpgrade.addLevelEvent(100, () => {
+    if (getUpgradeCount("RATnip") == 60 && getUpgradeCount("RAT food") == 70 && getUpgradeCount("RATnip 2") < 60) {
+        showUpgradeButton("RATnip 2");
+    }
+})
+
+borbUpgrade.addLevelEvent(150, () => {
+    showUpgradeButton("big borbs");
+}, true)
+
+borbUpgrade.addLevelEvent(200, () => {
+    showUpgradeButton("superior borbs");
+}, true)
+
+borbUpgrade.addLevelEvent(250, () => {
+    showUpgradeButton("godlike borbs");
+}, true)
+
+ratNip2Upgrade.addLevelEvent(30, () => {
+    removeUpgradeButton("RATnip 2");
+    showUpgradeButton("diamond RATs");
+}, true)
+
+
 let entries = Object.entries(upgradeObjects);
 for (let [index, [_key, val]] of Object.entries(upgradeObjects).entries()) {
     if (index < 3) {
@@ -99,4 +147,5 @@ for (let [index, [_key, val]] of Object.entries(upgradeObjects).entries()) {
     }, true);
 }
 
+createToastNotification("getting idle rewards. wait")
 getIdleRewards();

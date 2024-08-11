@@ -14,8 +14,10 @@ let basementSize = 2;
 let farmersPerFarm = 4;
 let upgradeMultipliers = {};
 let ratOwned = false;
+let diamondRatsOwned = false;
 let ratClickChance = 5;
 let ratClickMultiplier = 1.1;
+let diamondRatClickMultiplier = 1.3;
 let globalPriceMultiplier = 1;
 let priceMultipliers = {};
 let striking = {};
@@ -25,22 +27,37 @@ let isMobileUI = false;
 let mobileMultibuyAmount = 1;
 let mobileMultibuyOptions = [1, 5, 10, 50, 100];
 let clicksSinceLastSession = 0;
-
+let borbMultiplier = 1;
+let clickerUpgradeShop = document.getElementById("clicker-upgrade-shop");
+let onetimeUpgradeShop = document.getElementById("onetime-upgrade-shop");
+let mainElement = this.document.getElementsByTagName("main")[0];
+let pcShopsContainer = this.document.getElementById("clicker-onetime-shops-container");
+let pcShopButtonContainer = this.document.getElementById("pc-other-shops-container");
+let upgradeShop = this.document.getElementById("upgrade-shop");
+let mobileButtons = this.document.getElementsByClassName("mobile-upgrade-category-button");
 function clickWatermelon(x, y) {
     if (animationInProgress) {
         return;
     }
 
     let isCritical = false;
+    let isDiamond = false;
+    let randomNumber = Math.round(Math.random() * 100);
 
-    if (ratOwned) {
-        let randomNumber = Math.round(Math.random() * 100);
+    if (ratOwned && !diamondRatsOwned) {
         if (randomNumber < ratClickChance) {
             isCritical = true;
         }
+    } else {
+        if (diamondRatsOwned) {
+            isCritical = true;
+            if (randomNumber < ratClickChance) {
+                isDiamond = true;
+            }
+        }
     }
 
-    let clicksToGet = 1 * clickMultiplier * extraClickMultiplier * (isCritical ? ratClickMultiplier : 1);
+    let clicksToGet = clickMultiplier * extraClickMultiplier * (isCritical ? ratClickMultiplier : 1) * (isDiamond ? diamondRatClickMultiplier : 1);
     let randomOffset = Math.floor(Math.random() * 20) - 9;
 
     if (!settings.get("Compact Clicks Text")) {
@@ -54,6 +71,9 @@ function clickWatermelon(x, y) {
         clickText.style.top = y - 30 + "px";
         if (isCritical) {
             clickText.style.color = "gold";
+            if (isDiamond) {
+                clickText.style.color = "cyan";
+            }
         }
 
         document.body.appendChild(clickText);
@@ -208,13 +228,6 @@ window.addEventListener("keyup", (ev) => {
 });
 
 window.addEventListener('resize', () => {
-    let clickerUpgradeShop = document.getElementById("clicker-upgrade-shop");
-    let onetimeUpgradeShop = document.getElementById("onetime-upgrade-shop");
-    let mainElement = this.document.getElementsByTagName("main")[0];
-    let pcShopsContainer = this.document.getElementById("clicker-onetime-shops-container");
-    let pcShopButtonContainer = this.document.getElementById("pc-other-shops-container");
-    let upgradeShop = this.document.getElementById("upgrade-shop");
-    let mobileButtons = this.document.getElementsByClassName("mobile-upgrade-category-button");
     isMobileUI = this.window.innerWidth < 768;
 
     if (isMobileUI) {

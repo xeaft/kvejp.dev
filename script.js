@@ -27,7 +27,6 @@ function textRenderFunc(objIndex, interval) {
         mainText = textObject.innerText;
         textObject.style.innerText = "";
         textObject.style.display = "block";
-
     }
 
     let minRandNum = 12;

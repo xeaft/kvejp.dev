@@ -33,6 +33,8 @@ createOneTimeUpgrade("melon fertilizer", "farms produce 20% more melons", 4500, 
 });
 
 createOneTimeUpgrade("RATs", "every click has a 5% chance to give extra melons", 8000, () => {
+    showUpgradeButton("RAT food")
+    showUpgradeButton("RATnip")
     ratOwned = true;
 });
 
@@ -95,8 +97,54 @@ createOneTimeUpgrade("gpt premium", "just a premium version of the melon-generat
 });
 
 createOneTimeUpgrade("fast borbs", "theyre fast.", 10_000_000, () => {
-    extraClickMultiplier += 3;
+    extraClickMultiplier += 3.8;
 });
+
+// other
+
+createOneTimeUpgrade("more melons", "even more melons, globally", 5_000_000, () => {
+    melonMultiplier += 0.5;
+});
+
+function refreshBorbs() {
+    clickMultiplier = 1;
+    let num = getUpgradeCount("borb");
+    for (let i = 0; i < num; i++) {
+        upgradeObjects["borb"].callback();
+    }
+}
+
+createOneTimeUpgrade("strong borbs", "makes borbs very strong", 500000, () => {
+    borbMultiplier += 2;
+    refreshBorbs();
+});
+
+createOneTimeUpgrade("big borbs",  "makes borbs very big", 200_000_000, () => {
+    borbMultiplier += 3;
+    refreshBorbs();
+});
+
+createOneTimeUpgrade("superior borbs",  "makes borbs.. superior?", 15_000_000_000, () => {
+    borbMultiplier += 4;
+    refreshBorbs();
+});
+
+createOneTimeUpgrade("godlike borbs",  "because superior isnt enough", 1_000_000_000_000, () => {
+    borbMultiplier += 5;
+    refreshBorbs();
+});
+
+createOneTimeUpgrade("epic RATs",  "rat.", 500000, () => {
+    ratClickMultiplier += 5;
+});
+
+createOneTimeUpgrade("diamond RATs", "100% chance for a golden RAT click. adds a 5% chance for a diamond RAT click.", 5_500_000, () => {
+    ratClickChance = 5;
+    diamondRatsOwned = true;
+    showUpgradeButton("diamond powder");
+    showUpgradeButton("diamond purifier");
+});
+
 
 for (let i of Array.from(document.getElementById("onetime-upgrade-shop-container").children)) {
     let text = i.id.split("-upgrade")[0];
