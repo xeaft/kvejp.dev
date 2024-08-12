@@ -1,4 +1,4 @@
-function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId, type) {
+function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopId, type, noRepeat) {
     let upgradeShop = document.getElementById(upgradeShopId);
     let button = document.createElement("div");
     let titleText = document.createElement("p");
@@ -172,7 +172,10 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
             if (striking[name]) {
                 return;
             }
-
+            if (noRepeat) {
+                callback(name);
+                return;
+            }
             let ownedAmt = +ownedText.innerHTML;
             for (let i = 0; i < ownedAmt; i++) {
                 callback(name);
@@ -273,8 +276,8 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     return upgradeObject;
 }
 
-function createUpgrade(name, description, cost, callback, delay, type) {
-    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", type);
+function createUpgrade(name, description, cost, callback, delay, type, noRepeat) {
+    return createAnyUpgrade(name, description, cost, callback, delay, "upgrade-shop-container", type, noRepeat);
 }
 
 function markOneTimeUpgradeAsPurchased(upgradeName) {

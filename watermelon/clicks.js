@@ -5,7 +5,8 @@ function getClicks() {
 }
 
 function addClicks(amt) {
-    clicks += amt * melonMultiplier;
+    let clickAmt = amt * melonMultiplier;
+    clicks += clickAmt;
 }
 
 function removeClicks(amt) {
@@ -21,7 +22,6 @@ function getUpgradeCount(upgrade) {
     if (upgradeButton == null) {
         return 0;
     }
-    
     return +upgradeButton.querySelector(".upgrade-owned").innerText;
 }
 
