@@ -31,18 +31,18 @@ deleteProgressButton.addEventListener("click", (ev) => {
     if (ev.button == 0) {
         if (delButtonClicks < 3) {
             delButtonClicks++;
-            deleteProgressButton.querySelector("p").innerText = `Delete Progress (${4 - delButtonClicks})`;
+            deleteProgressButton.querySelector("span").innerText = `Delete Progress (${4 - delButtonClicks})`;
             let nowDelButtonClicks = delButtonClicks;
             setTimeout(() => {
                 if (nowDelButtonClicks == delButtonClicks) {
-                    deleteProgressButton.querySelector("p").innerText = `Delete Progress`;
+                    deleteProgressButton.querySelector("span").innerText = `Delete Progress`;
                     delButtonClicks = 0;
                 }
             }, 1000);
             return;
         }
         delButtonClicks = 0;
-        deleteProgressButton.querySelector("p").innerText = `Delete Progress`;
+        deleteProgressButton.querySelector("span").innerText = `Delete Progress`;
         createInfoWindow("Content Deletion warning.", "This action is permanent and cannot be reverted. everyone knows that though, right?", () => {localStorage.clear(); window.location.reload();}, "Continue", "Cancel").create();
     }
 });

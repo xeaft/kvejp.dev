@@ -5,8 +5,12 @@ function getProgress() {
 
     for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-        let value = localStorage.getItem(key);
 
+        if (key.startsWith("--")) {
+            continue;
+        }
+
+        let value = localStorage.getItem(key);
         if (value[0] == "{"){
             value = JSON.parse(value);
         }

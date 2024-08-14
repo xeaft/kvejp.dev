@@ -146,6 +146,3 @@ for (let [index, [_key, val]] of Object.entries(upgradeObjects).entries()) {
         val.show();
     }, true);
 }
-
-createToastNotification("getting idle rewards. wait")
-getIdleRewards();

@@ -14,7 +14,7 @@ addEventListener("resize", (event) => {
 window.dispatchEvent(new Event("resize"));
 
 let allMainTextObjs = document.getElementsByTagName("main")[0].getElementsByTagName("p");
-let mainTextObjs = document.getElementsByClassName("stupidly-animated");
+let mainTextObjs = document.getElementsByClassName("");
 
 let mainText = "";
 let currentObjectIndex = 0;
@@ -105,4 +105,34 @@ function readFile(acceptType) {
         document.body.appendChild(fileInput);
         fileInput.click();
     });
+}
+
+var varAdds = {
+    "--hover-glow": "60"
+}
+function changeVar(variable, val, nc) {
+    if (val.length == 4) {
+        val = val.split('').map(char => char + char).join('').slice(1,8);
+    }
+
+    if (variable in varAdds && !nc) {
+        val += varAdds[variable];
+    }
+
+    root.style.setProperty(variable, val);
+    localStorage.setItem(variable, val)
+}
+
+let cssVarDefaults = {}
+
+function getCSSVarValue(CSSVar) {
+    return getComputedStyle(root).getPropertyValue(CSSVar).trim();
+}
+
+for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    if (key.startsWith("--")) {
+        cssVarDefaults[key] = getCSSVarValue(key);
+        changeVar(key, localStorage.getItem(key), true);
+    }
 }

@@ -3,9 +3,9 @@ main > p {
 }
 
 main > p > a {
-    color: rgb(46, 186, 233);
+    color: var(--privacy-policy);
 }
 
 main > p > a:hover {
-    color: rgb(26, 100, 124);
+    color: var(--privacy-policy-hover);
 }

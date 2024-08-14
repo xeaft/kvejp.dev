@@ -18,17 +18,17 @@
     <link href="/404.css" rel="stylesheet">
     <script src="/script.js" defer></script>
     <script src="/stringThing.js" defer></script>
-    <script src="clicks.js" defer></script>
-    <script src="script.js" defer></script>
-    <script src="upgrade-thing.js" defer></script>
-    <script src="progressive_upgrades.js" defer></script>
-    <script src="onetime_upgrades.js" defer></script>
-    <script src="clicker_upgrades.js" defer></script>
-    <script src="upgrades_other.js" defer></script>
-    <script src="config.js" defer></script>
-    <script src="config-handler.js" defer></script>
-    <script src="debuffs.js" defer></script>
-    <script src="settings.js" defer></script>
+    <script src="./clicks.js" defer></script>
+    <script src="./script.js" defer></script>
+    <script src="./upgrade-thing.js" defer></script>
+    <script src="./progressive_upgrades.js" defer></script>
+    <script src="./onetime_upgrades.js" defer></script>
+    <script src="./clicker_upgrades.js" defer></script>
+    <script src="./upgrades_other.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script src="./config-handler.js" defer></script>
+    <script src="./debuffs.js" defer></script>
+    <script src="./settings.js" defer></script>
 </head>
 
 <body>
@@ -39,8 +39,9 @@
             <nav id="tabs">
                 <a class="navanchor" id="homenav" href="/">Home</a>
                 <a class="navanchor" id="aboutnav" href="/about/">About</a>
-                <a class="navanchor" id="testnav" href="/test/">Test</a>
                 <a class="navanchor" id="melonnav" href="/watermelon/">Watermelon</a>
+                <a class="navanchor" id="settingsnav" href="/config/">Settings</a>
+
 
             </nav>
         </div>
@@ -49,7 +50,7 @@
         <div id="status-effect-container"></div>
         <img src="/assets/melon.png" alt="melon" draggable="false">
         <div id="texts-container">
-            <p class="stupidly-animated maintext" id="clicks-count">0</p>
+            <p class=" maintext" id="clicks-count">0</p>
             <p id="compact-click-text"></p>
         </div>
         <div id="global-settings-button"></div>
@@ -91,11 +92,13 @@
         </div>
     </main>
     <footer>
-        <div class="button" id="save-progress"><p>Download Progress</p></div>
-        <div class="button" id="load-progress"><p>Load Progress</p></div>
-        <div class="button" id="transfer-progress"><p>Transfer Progress</p></div>
-        <div class="button" id="delete-progress"><p>Delete Progress</p></div>
-        <p id="policyText"><a href="/privacypolicy/">privacy policy</a></p>
+        <div class="button button-normal" id="save-progress"><span>Download Progress</span></div>
+        <div class="button button-normal" id="load-progress"><span>Load Progress</span></div>
+        <div class="button button-warn" id="transfer-progress"><span>Transfer Progress</span></div>
+        <div class="button button-danger" id="delete-progress"><span>Delete Progress</span></div>
+        <div id="footerdiv">
+            <p id="policyText"><a href="/privacypolicy/">privacy policy</a></p>
+        </div>
     </footer>
 
 </body>

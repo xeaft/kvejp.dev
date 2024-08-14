@@ -96,9 +96,9 @@ function updateClicksText() {
         let cost = oldCost * globalPriceMultiplier;
         costText.innerText = Math.ceil(cost);        
         if (cost <= clicks) {
-            costText.style.color = "#00c400";
+            costText.style.color = getCSSVarValue("--melon-text-affordable");
         } else {
-            costText.style.color = "#c40000";
+            costText.style.color = getCSSVarValue("--melon-text-not-affordable");
         }
     }
 

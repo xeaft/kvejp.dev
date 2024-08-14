@@ -31,7 +31,7 @@ function createAnyUpgrade(name, description, cost, callback, delay, upgradeShopI
     button.className = "upgrade-button";
     titleCostContainer.className = "upgrade-container";
     ownedText.className = "upgrade-owned";
-    button.style.backgroundColor = "#232323";
+    button.style.backgroundColor = getCSSVarValue("--melon-button");
     costText.style.marginLeft = "5%";
     button.id = `${name}-upgrade`;
 
@@ -296,12 +296,12 @@ function markOneTimeUpgradeAsPurchased(upgradeName) {
     }
 
     upgradeDiv.classList.add("onetime-upgrade-purchased");
-    upgradeDiv.style.backgroundColor = "#141414";
+    upgradeDiv.style.backgroundColor = getCSSVarValue("--melon-button-owned");
     let nameText = upgradeDiv.querySelectorAll("p")[1];
-    nameText.style.color = "#666";
+    nameText.style.color = getCSSVarValue("--melon-text-owned");
     let priceText = upgradeDiv.getElementsByClassName("upgrade-cost")[0];
     priceText.innerText = "owned";
-    priceText.style.color = "#666";
+    priceText.style.color = getCSSVarValue("--melon-text-owned");
 
     upgradeShop.appendChild(upgradeDiv);
 }
@@ -348,7 +348,7 @@ function createOneTimeUpgrade(name, description, cost, callback) {
     button.className = "upgrade-button";
     costText.className = "upgrade-cost";
     titleCostContainer.className = "upgrade-container";
-    button.style.backgroundColor = "#232323";
+    button.style.backgroundColor = getCSSVarValue("--melon-button");
     costText.style.marginLeft = "5%";
 
     titleCostContainer.appendChild(titleText);

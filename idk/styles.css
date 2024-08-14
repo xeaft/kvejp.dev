@@ -1,9 +1,9 @@
 #melonnav {
-    color: #00CFCC;
+    color: var(--selected-nav);
     text-decoration: underline;
     font-weight: bold;
 }
 
 #melonnav:hover {
-    color: #00ACAA;
+    filter: brightness(60%);
 }

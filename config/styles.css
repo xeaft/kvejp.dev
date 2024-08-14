@@ -1,0 +1,51 @@
+
+#settings-container {
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.setting-value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+input[type="button"] {
+    background-color: var(--background-color);
+    outline: none;
+    border: 1px solid var(--text-color);
+    height: auto;
+    color: var(--text-color);
+}
+
+input[type="text"] {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    outline: none;
+    font-family: monospace;
+}
+
+input[type="color"] {
+    margin-left: 2%;
+    margin-right: 2%;
+    background-color: var(--background-color);
+    border: none;
+}
+
+#settingsnav {
+    color: var(--selected-nav);
+    text-decoration: underline;
+}
+
+#settingsnav:hover {
+    filter: brightness(60%);
+}

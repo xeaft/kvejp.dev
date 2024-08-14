@@ -1,9 +1,9 @@
 #homenav {
-    color: #00CFCC;
+    color: var(--selected-nav);
     text-decoration: underline;
     font-weight: bold;
 }
 
 #homenav:hover {
-    color: #00ACAA;
+    filter: brightness(60%);
 }

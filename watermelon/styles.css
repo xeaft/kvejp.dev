@@ -69,7 +69,7 @@ p {
 
 .pc-upgrade-category-button {
     width: 100%;
-    background-color: #131313;
+    background-color: var(--melon-tab-unfocused);
     border-bottom: 2px solid #440000;
 }
 
@@ -100,7 +100,7 @@ p {
 .upgrade-title {
     width: 100%;
     height: 0;
-    background-color: #131313;
+    background-color: var(--melon-tab-unfocused);
     margin-bottom: 2px;
     display: flex;
     flex-direction: row;
@@ -130,23 +130,18 @@ p {
     padding-top: 0;
 }
 
-.button:hover {
-    cursor: pointer;
-    background-color: #033e6e;
-}
-
 .mobile-upgrade-category-container {
     display: none;
 }
 
 #melonnav {
-    color: #00CFCC;
+    color: var(--selected-nav);
     text-decoration: underline;
     font-weight: bold;
 }
 
 #melonnav:hover {
-    color: #00ACAA;
+    filter: brightness(60%);
 }
 
 .pc-upgrade-category-container {
@@ -165,8 +160,8 @@ p {
 }
 
 .active {
-    color: rgb(45, 130, 216);
-    background-color: #222;
+    color: var(--melon-text-selected-tab);
+    background-color: var(--melon-selected-tab);
     font-weight: bold;
 }
 
@@ -209,7 +204,7 @@ p {
     left: 2vw;
     width: 8vw;
     height: 3svh;
-    background-color: #131313;
+    background-color: var(--melon-tab-unfocused);
     border: 2px solid #00ACAA;
     display: none;
 }
@@ -221,22 +216,6 @@ p {
     line-height: 3svh;
     padding-left: 2px;
     padding-right: 2px;
-}
-
-#transfer-progress {
-    background-color: rgb(110, 80, 14);
-}
-
-#transfer-progress:hover {
-    background-color: rgb(141, 104, 16);
-}
-
-#delete-progress {
-    background-color: rgb(105, 2, 2);
-}
-
-#delete-progress:hover {
-    background-color: rgb(135, 2, 2);
 }
 
 .info-window-closing {
@@ -446,7 +425,7 @@ p {
     .upgrade-shop {
         width: calc(100% - 4px);
         left: 0;
-        border: 2px solid #400;
+        border: 2px solid var(--melon-shop-border);
     }
 
     #upgrade-shop {
@@ -486,7 +465,7 @@ p {
     }
 
     .mobile-upgrade-category-button {
-        background-color: #131313;
+        background-color: var(--melon-tab-unfocused);
         width: 100%;
     }
 
@@ -512,8 +491,8 @@ p {
         right: 0;
         top: 55svh;
         height: 2rem;
-        background-color: #131313;
-        border: 2px solid #400;
+        background-color: var(--melon-tab-unfocused);
+        border: 2px solid var(--melon-shop-border);
         display: flex;
     }
     
