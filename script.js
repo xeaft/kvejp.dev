@@ -136,3 +136,21 @@ for (let i = 0; i < localStorage.length; i++) {
         changeVar(key, localStorage.getItem(key), true);
     }
 }
+
+let loc = window.location.href;
+let addon = loc.indexOf("?");
+let validAddon = loc.indexOf("/?");
+
+if (!loc.endsWith("/")) {
+    if (addon == -1) {
+        window.location.href = loc + "/";
+    } else {
+        let newLoc = loc.slice(0, addon) + "/" + loc.slice(addon, loc.length);
+        window.location.href = newLoc;
+    }
+}
+
+if (addon != validAddon) {
+    let newLoc = loc.slice(0, addon) + "/" + loc.slice(addon, loc.length);
+    window.location.href = newLoc;
+}
