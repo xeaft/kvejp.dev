@@ -141,6 +141,8 @@ let loc = window.location.href;
 let addon = loc.indexOf("?");
 let validAddon = loc.indexOf("/?");
 
+loc = loc.replace("index.html", "");
+
 if (!loc.endsWith("/")) {
     if (addon == -1) {
         window.location.href = loc + "/";

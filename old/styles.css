@@ -1,0 +1,9 @@
+#homenav {
+    color: var(--selected-nav);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#homenav:hover {
+    filter: brightness(60%);
+}
