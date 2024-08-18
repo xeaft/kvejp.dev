@@ -105,24 +105,6 @@ function updateClicksText() {
     document.getElementById("clicks-count").innerText = Math.floor(clicks);
 }
 
-function createToastNotification(text, colorOptional) {
-    let color = colorOptional ? colorOptional : "#ffd700";
-    let textObj = document.createElement("p");
-    let toasts = Array.from(document.getElementsByClassName("toast-notification"));
-
-    for (let [index, toast] of toasts.entries()) {
-        toast.style.top = (toasts.length - index) * 50 + "px";
-    }
-
-    textObj.className = "toast-notification";
-    textObj.innerText = text;
-    textObj.style.color = color;
-    document.body.appendChild(textObj);
-    setTimeout(() => {
-        textObj.parentElement.removeChild(textObj);
-    }, 4000);
-}
-
 function upgradeEverythingPossible(reverse) {
     let upgrades = Array.from(document.getElementsByClassName("upgrade-button"));
     if (reverse) {
