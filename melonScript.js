@@ -69,11 +69,20 @@ function clickWatermelon(x, y) {
         clickText.style.position = "absolute";
         clickText.style.left = x - 10 + randomOffset - Math.floor(clickTextWidth.width / 2) + "px";
         clickText.style.top = y - 30 + "px";
+
+        let rotationAngle = 0;
+        let textSize = 22
         if (isCritical) {
             clickText.style.color = "gold";
+            rotationAngle = Math.round(Math.random() * 15) - 7;
+
             if (isDiamond) {
+                rotationAngle = Math.round(Math.random() * 45) - 22;
+                textSize = 26;
                 clickText.style.color = "cyan";
             }
+            clickText.style.setProperty("--rotation", `${rotationAngle}deg`);
+            clickText.style.setProperty("--text-size", `${textSize}px`);
         }
 
         document.body.appendChild(clickText);
